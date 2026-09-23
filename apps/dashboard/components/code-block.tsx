@@ -22,7 +22,12 @@ export function CodeBlock({
       <div className="absolute top-1 right-1">
         <CopyButton value={code} label={`Copy ${label ?? "code"}`} />
       </div>
-      <pre className="overflow-x-auto p-3 pr-10 font-mono text-xs leading-relaxed">
+      {/* Focusable so keyboard users can scroll long lines (WCAG scrollable-region-focusable). */}
+      <pre
+        tabIndex={0}
+        aria-label={label ?? "Code"}
+        className="overflow-x-auto rounded-lg p-3 pr-10 font-mono text-xs leading-relaxed outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      >
         <code>{code}</code>
       </pre>
     </div>

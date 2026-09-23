@@ -41,6 +41,8 @@ for (const colorScheme of ["light", "dark"] as const) {
       for (const v of violations) problems.push(`${label} [axe:${v.impact}] ${v.id}: ${v.help}`)
     }
 
+    await page.goto(`${DASHBOARD}/`)
+    await audit("landing")
     await page.goto(`${DASHBOARD}/login`)
     await audit("login")
     const base = await signInToProject(page)

@@ -83,6 +83,7 @@ attributes inside buttons, following the shadcn icons rule.
 ## 3. App shell and information architecture
 
 ```text
+/                                                landing page (static; components/landing/*)
 /login  /signup                                  (auth layout: centered card, logo, 400px)
 /projects                                        project list + "New project"
 /projects/new                                    create → onboarding
@@ -109,6 +110,16 @@ The environment and range live in the **URL** (`?env=production&range=24h`) and 
 It has no open or close animation.
 
 ## 4. Screens
+
+### Landing (`/`)
+Static and fast, because a monitoring product must have good Web Vitals itself. It has:
+- a header with anchor links and Sign in / Get started
+- a hero with the value proposition, CTAs and the install command
+- a **real** product screenshot in both themes (`public/landing/overview-{light,dark}.png`, regenerated
+  from the seeded dashboard at 1440×900 @2x)
+- factual stats, features, the 3-step setup with real code, the privacy lists, a final CTA and a footer
+
+Every claim on it must be true of the code. Update it when a number (for example the SDK size) changes.
 
 ### Overview (PRD §20)
 Row 1, four KPI stat tiles: **Errors**, **API failures**, **Users**, **Error rate**.
