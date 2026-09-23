@@ -31,11 +31,22 @@ Deploy in this order: database → API → dashboard → demo.
 > The SDK retries with backoff, so events aren't lost to one slow wake-up. For always-on, use the
 > $7 plan (then you can move migrations to a pre-deploy command and remove `MIGRATE_ON_START`).
 
+**Troubleshooting: sign-in fails with `INVALID_ORIGIN` (403).** `DASHBOARD_ORIGINS` must be the
+**full origin including the scheme** (`https://thetraceforge.vercel.app`), not a bare host
+(`thetraceforge.vercel.app`) and not with a trailing slash — it is compared byte-for-byte against
+the browser's `Origin` header. A bad value fails the API at _startup_ (visible as the deploy going
+red, and in the logs as `Invalid environment configuration: DASHBOARD_ORIGINS...`), never as a
+silently broken deploy — `apps/api/src/env.ts` validates this. Check the `config: sign-in is
+accepted only from dashboardOrigins` line near the top of the Render logs to see the exact value
+the running service has.
+
 ## 3. Dashboard (Vercel)
 
 1. **Add New → Project**, then import this repository.
 2. **Root Directory:** `apps/dashboard` (Framework Preset: Next.js). `vercel.json` sets the install and build
-   commands for the monorepo, with the exact pnpm version the lockfile needs; leave Build and Output Settings alone.
+   commands for the monorepo with the exact pnpm version the lockfile needs, and an `ignoreCommand`
+   (`turbo query affected`) so Vercel skips rebuilding the dashboard on commits that only touch
+   `apps/api` or `apps/demo` — leave Build and Output Settings alone.
 3. Environment variables:
    - `API_URL`: the Render URL, e.g. `https://traceforge-api.onrender.com`
 4. Deploy, then add the dashboard URL to `DASHBOARD_ORIGINS` on Render if you haven't yet.

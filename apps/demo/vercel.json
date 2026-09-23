@@ -2,5 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "installCommand": "cd ../.. && npx --yes pnpm@12.5.1 install --frozen-lockfile",
-  "buildCommand": "cd ../.. && npx --yes pnpm@12.5.1 turbo run build --filter=@traceforge/demo"
+  "buildCommand": "cd ../.. && npx --yes pnpm@12.5.1 turbo run build --filter=@traceforge/demo",
+  "ignoreCommand": "cd ../.. && npx --yes turbo@2.11.3 query affected --packages @traceforge/demo --exit-code --base=${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}"
 }
