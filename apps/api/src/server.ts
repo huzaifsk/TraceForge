@@ -49,6 +49,12 @@ try {
   process.exit(1)
 }
 
+// Non-secret configuration, logged once so a misconfigured deploy is easy to spot.
+app.log.info(
+  { publicApiUrl: env.PUBLIC_API_URL, dashboardOrigins: env.DASHBOARD_ORIGINS },
+  "config: sign-in is accepted only from dashboardOrigins"
+)
+
 // Say plainly when the database is missing, instead of failing on the first request.
 try {
   await app.sql`select 1`
