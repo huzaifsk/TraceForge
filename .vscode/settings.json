@@ -1,0 +1,10 @@
+{
+  // Use the repo's pinned TypeScript (~6.0), not the editor's bundled one,
+  // so editor diagnostics match `pnpm typecheck`.
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "files.associations": { "*.css": "tailwindcss" }
+}
