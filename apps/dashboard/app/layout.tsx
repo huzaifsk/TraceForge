@@ -29,7 +29,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
       className={cn("font-sans antialiased", fontSans.variable, fontMono.variable)}
     >
-      <body>
+      {/* Browser extensions (password managers, Grammarly, colour pickers) add attributes to <body>
+          before React loads; this silences only mismatches in body's own attributes. */}
+      <body suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
     </html>
