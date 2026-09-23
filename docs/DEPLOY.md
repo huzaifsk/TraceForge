@@ -40,6 +40,16 @@ silently broken deploy — `apps/api/src/env.ts` validates this. Check the `conf
 accepted only from dashboardOrigins` line near the top of the Render logs to see the exact value
 the running service has.
 
+**Troubleshooting: new projects get a DSN pointing at `localhost`.** `PUBLIC_API_URL` is baked
+verbatim into every project's DSN (`apps/dashboard`'s onboarding screen and `projects.dsn` in the
+database), so if it's left unset in production the SDK install instructions you hand out only work
+on your own machine. In `production`, the API refuses to boot with any loopback host
+(`localhost`/`127.0.0.1`/`::1`/`0.0.0.0`) here, failing loudly with `Invalid environment
+configuration: PUBLIC_API_URL...` instead of shipping broken DSNs silently — set it to the
+service's real public URL (e.g. `https://traceforge-api-tu5b.onrender.com`) and redeploy. Check the
+`config: sign-in is accepted only from dashboardOrigins` log line's `publicApiUrl` field to see
+what the running service actually has.
+
 ## 3. Dashboard (Vercel)
 
 1. **Add New → Project**, then import this repository.

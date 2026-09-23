@@ -121,6 +121,7 @@ These are settled. Changing one needs an explicit reason written into this file.
 | 24 | `get-session` is **not rate-limited**; the dashboard forwards `x-forwarded-for` | Server-side session checks share one IP; limiting them would throttle every user |
 | 27 | `DASHBOARD_ORIGINS` entries **require a scheme** (`https://host`, no path/trailing slash), validated at boot | A bare host never equals a browser's `Origin` header — the API must fail loudly, not silently reject every sign-in |
 | 28 | Vercel's `ignoreCommand` for `dashboard`/`demo` is **`turbo query affected`** (not the deprecated `turbo-ignore`) | Skips rebuilding a Next app on commits that only touch `apps/api` |
+| 29 | `PUBLIC_API_URL` **rejects any loopback host** (`localhost`/`127.0.0.1`/`::1`/`0.0.0.0`, any port) in `production`, validated at boot | It's baked verbatim into every project's DSN — a loopback value silently ships onboarding instructions that only work on the deploying machine |
 
 ## Event lifecycle (end to end)
 

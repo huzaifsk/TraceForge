@@ -70,4 +70,26 @@ describe("loadEnv", () => {
       /DASHBOARD_ORIGINS/
     )
   })
+
+  it("refuses to boot in production with the localhost PUBLIC_API_URL default", () => {
+    // PUBLIC_API_URL is baked verbatim into every project's DSN
+    // (projects.dsn, shown on the onboarding screen) — leaving it at its
+    // dev default in production silently hands out unusable DSNs instead
+    // of failing loudly.
+    expect(() => loadEnv({ ...validEnv, NODE_ENV: "production" })).toThrow(/PUBLIC_API_URL/)
+  })
+
+  it("accepts production once PUBLIC_API_URL is set", () => {
+    const env = loadEnv({
+      ...validEnv,
+      NODE_ENV: "production",
+      PUBLIC_API_URL: "https://api.example.com",
+    })
+    expect(env.PUBLIC_API_URL).toBe("https://api.example.com")
+  })
+
+  it("keeps the localhost default in development and test", () => {
+    expect(loadEnv(validEnv).PUBLIC_API_URL).toBe("http://localhost:4000")
+    expect(loadEnv({ ...validEnv, NODE_ENV: "test" }).PUBLIC_API_URL).toBe("http://localhost:4000")
+  })
 })
