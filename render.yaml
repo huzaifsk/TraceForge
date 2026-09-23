@@ -1,0 +1,35 @@
+# Render Blueprint for the Pulseed API (https://render.com/docs/blueprint-spec).
+# The dashboard and demo deploy to Vercel; the database is Neon. See docs/DEPLOY.md.
+services:
+  - type: web
+    name: pulseed-api
+    runtime: node
+    plan: free
+    # Install dev dependencies too: the build needs tsdown and TypeScript.
+    buildCommand: >-
+      npm install -g pnpm@12.5.1 &&
+      NODE_ENV=development pnpm install --frozen-lockfile &&
+      pnpm turbo run build --filter=@pulseed/api
+    startCommand: cd apps/api && node --enable-source-maps dist/server.mjs
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: LOG_LEVEL
+        value: info
+      # The free plan has no pre-deploy step, so the API migrates itself on boot.
+      - key: MIGRATE_ON_START
+        value: "true"
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      # Set these three in the Render dashboard:
+      - key: DATABASE_URL # Neon pooled connection string, with ?sslmode=require
+        sync: false
+      - key: PUBLIC_API_URL # this service's URL, e.g. https://pulseed-api.onrender.com
+        sync: false
+      - key: DASHBOARD_ORIGINS # your Vercel dashboard URL(s), comma-separated
+        sync: false

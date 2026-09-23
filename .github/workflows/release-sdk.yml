@@ -1,0 +1,50 @@
+name: Release SDK
+
+# Publish @pulseed/sdk to npm when a tag like `sdk-v0.1.0` is pushed:
+#   git tag sdk-v0.1.0 && git push origin sdk-v0.1.0
+# Requires the repository secret NPM_TOKEN (an npm "Automation" token).
+
+on:
+  push:
+    tags: ["sdk-v*"]
+
+permissions:
+  contents: read
+  id-token: write # npm provenance: proves the package was built from this repo by this workflow
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Tag must match the package version
+        run: |
+          version=$(node -p "require('./packages/sdk/package.json').version")
+          if [ "sdk-v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match packages/sdk version $version"
+            exit 1
+          fi
+
+      - name: Build and test the SDK
+        run: pnpm turbo run build test --filter=@pulseed/sdk...
+
+      - name: Bundle size budget
+        run: pnpm --filter @pulseed/sdk size
+
+      - name: Publish
+        run: pnpm --filter @pulseed/sdk publish --access public --provenance --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

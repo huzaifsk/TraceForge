@@ -1,0 +1,11 @@
+{
+  "extends": "@pulseed/typescript-config/react-library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {
+      "@pulseed/ui/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "*.mjs", "*.js"],
+  "exclude": ["node_modules", "dist"]
+}

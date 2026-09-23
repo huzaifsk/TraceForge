@@ -1,0 +1,4 @@
+{
+  "extends": "@pulseed/typescript-config/node.json",
+  "include": ["src", "*.config.ts"]
+}

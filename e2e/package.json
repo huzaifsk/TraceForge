@@ -1,0 +1,23 @@
+{
+  "name": "@pulseed/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@pulseed/eslint-config": "workspace:*",
+    "@pulseed/event-schema": "workspace:*",
+    "@pulseed/sdk": "workspace:*",
+    "@pulseed/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  }
+}
