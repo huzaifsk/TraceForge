@@ -24,7 +24,7 @@ Deploy in this order: database → API → dashboard → demo.
 2. Fill in the three variables it asks for:
    - `DATABASE_URL`: the Neon string from step 1.
    - `PUBLIC_API_URL`: the service's own URL, e.g. `https://traceforge-api.onrender.com`. It's shown after the first deploy; set it and redeploy.
-   - `DASHBOARD_ORIGINS`: your Vercel dashboard URL from step 3, e.g. `https://traceforge.vercel.app`.
+   - `DASHBOARD_ORIGINS`: your Vercel dashboard URL from step 3, e.g. `https://thetraceforge.vercel.app`.
 3. Deploy. Migrations run automatically at startup (`MIGRATE_ON_START=true`). `https://<api>/ready` should return `{"status":"ready"}`.
 
 > The free plan sleeps after 15 minutes idle, and the first request after that takes about 30–60 s.
