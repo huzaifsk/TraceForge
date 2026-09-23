@@ -52,4 +52,22 @@ describe("loadEnv", () => {
     })
     expect(env.DASHBOARD_ORIGINS).toEqual(["http://a.test", "http://b.test"])
   })
+
+  it("rejects a dashboard origin missing its scheme", () => {
+    // A bare host (e.g. "thetraceforge.vercel.app") never equals a browser's
+    // `Origin: https://thetraceforge.vercel.app` header, which silently
+    // rejects every sign-in with INVALID_ORIGIN instead of failing at boot.
+    expect(() => loadEnv({ ...validEnv, DASHBOARD_ORIGINS: "thetraceforge.vercel.app" })).toThrow(
+      /DASHBOARD_ORIGINS.*scheme required/
+    )
+  })
+
+  it("rejects a dashboard origin with a trailing slash or path", () => {
+    expect(() => loadEnv({ ...validEnv, DASHBOARD_ORIGINS: "https://a.test/" })).toThrow(
+      /DASHBOARD_ORIGINS/
+    )
+    expect(() => loadEnv({ ...validEnv, DASHBOARD_ORIGINS: "https://a.test/app" })).toThrow(
+      /DASHBOARD_ORIGINS/
+    )
+  })
 })

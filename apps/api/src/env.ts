@@ -7,6 +7,21 @@ const csv = z.string().transform((value) =>
     .filter(Boolean)
 )
 
+/**
+ * Origins must include the scheme (`https://host`, no path or trailing
+ * slash) so they compare equal to a browser's `Origin` header. A bare host
+ * like `thetraceforge.vercel.app` never matches and silently rejects every
+ * sign-in with INVALID_ORIGIN.
+ */
+const origin = z.string().refine((value) => {
+  try {
+    const url = new URL(value)
+    return (url.protocol === "https:" || url.protocol === "http:") && url.origin === value
+  } catch {
+    return false
+  }
+}, "must be an origin like https://example.com (scheme required, no path or trailing slash)")
+
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   HOST: z.string().default("0.0.0.0"),
@@ -17,7 +32,7 @@ const envSchema = z.object({
   PUBLIC_API_URL: z.url().default("http://localhost:4000"),
   /** Signs session cookies. Generate with `openssl rand -base64 32`. */
   BETTER_AUTH_SECRET: z.string().min(32, "must be at least 32 characters"),
-  DASHBOARD_ORIGINS: csv.default(["http://localhost:3000"]),
+  DASHBOARD_ORIGINS: csv.pipe(z.array(origin)).default(["http://localhost:3000"]),
   INGEST_RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(600),
   /** Apply pending migrations at startup (for hosts without a pre-deploy step, e.g. Render free). */
   MIGRATE_ON_START: z
