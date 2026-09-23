@@ -71,7 +71,7 @@ export const SDK_DEFAULTS = {
 } as const
 
 /** Header carrying the project's public ingestion key. */
-export const INGEST_KEY_HEADER = "x-pulseed-key"
+export const INGEST_KEY_HEADER = "x-traceforge-key"
 
 /**
  * Query-string alternative to the header. `navigator.sendBeacon` and

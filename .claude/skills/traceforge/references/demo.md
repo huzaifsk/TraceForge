@@ -8,13 +8,13 @@ events posted directly to the API.
 ## Setup
 
 - Next.js 16 on port 3001. The SDK is initialized in `apps/demo/instrumentation-client.ts` with
-  `NEXT_PUBLIC_PULSEED_DSN`, `environment: "development"` locally and `"production"` when deployed.
+  `NEXT_PUBLIC_TRACEFORGE_DSN`, `environment: "development"` locally and `"production"` when deployed.
 - The demo's own route handlers under `app/api/demo/*` produce the failing and slow responses.
 - `debug: true` in development, so the console shows what the SDK does.
 
 ## Layout
 
-A single page, max width 960 px, with a header ("Pulseed Demo: break things on purpose")
+A single page, max width 960 px, with a header ("TraceForge Demo: break things on purpose")
 and a link to the dashboard project. There's a grid of trigger cards (2 columns at ≥ 768 px, 1 below).
 Each card has an icon, a title, one sentence about what will happen, the event type it
 produces (a `Badge`: `error`, `api_error`, `web_vital`, …), and a button.
@@ -36,7 +36,7 @@ callback; add one only if there is a second use for it.)
 | **Slow Render** | a state toggle renders a component that blocks the main thread for about 400 ms (a busy loop) | poor `INP` on the next interaction |
 | **Large Image** | `/large-image`: a detailed hero image that arrives after 4.5 s (`/api/demo/slow-image`). It must be detailed: Chrome ignores low-entropy images as LCP candidates | poor `LCP` (~4.6 s) |
 | **Layout Shift** | `/layout-shift`: a promo banner at 1 s and a notice at 1.8 s, with no reserved space | poor `CLS` (~0.29) |
-| **React crash** (Phase 2) | a component throws during render inside `PulseedErrorBoundary` | `error` (error-boundary) |
+| **React crash** (Phase 2) | a component throws during render inside `TraceForgeErrorBoundary` | `error` (error-boundary) |
 | **Offline Mode** (Phase 2) | instructions plus a toggle: trigger errors while offline, go online, and watch the replay | offline buffer replay |
 | **Navigate** | links to `/orders`, `/orders/123` and `/settings` | `navigation` |
 

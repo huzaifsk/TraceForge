@@ -1,15 +1,15 @@
 ---
-name: pulseed
-description: The engineering handbook for Pulseed, an open-source frontend observability platform (browser SDK + Fastify ingestion API + Next.js dashboard + demo app) in a pnpm/Turborepo monorepo. Use it for ANY work in this repository — planning, writing or reviewing code in apps/api, apps/dashboard, apps/demo, packages/sdk, packages/event-schema, packages/shared or packages/ui; adding features from the PRD; designing dashboard screens; changing the event wire format or database; writing tests, CI or docs; or deciding "where does this go / how should this work". Read it before touching code, even for small changes.
+name: traceforge
+description: The engineering handbook for TraceForge, an open-source frontend observability platform (browser SDK + Fastify ingestion API + Next.js dashboard + demo app) in a pnpm/Turborepo monorepo. Use it for ANY work in this repository — planning, writing or reviewing code in apps/api, apps/dashboard, apps/demo, packages/sdk, packages/event-schema, packages/shared or packages/ui; adding features from the PRD; designing dashboard screens; changing the event wire format or database; writing tests, CI or docs; or deciding "where does this go / how should this work". Read it before touching code, even for small changes.
 ---
 
-# Pulseed — Engineering Handbook
+# TraceForge — Engineering Handbook
 
-Pulseed lets frontend developers see **what failed, where, how often, and who it
+TraceForge lets frontend developers see **what failed, where, how often, and who it
 affected** in production: JavaScript errors, unhandled rejections, failing and slow
 API calls, Core Web Vitals and navigation performance. It ships as:
 
-- **`@pulseed/sdk`**: a tiny, privacy-first browser SDK, published to npm
+- **`@traceforge/sdk`**: a tiny, privacy-first browser SDK, published to npm
 - **`apps/api`**: a Fastify service that ingests events and serves the dashboard's data
 - **`apps/dashboard`**: a Next.js dashboard, the product's face
 - **`apps/demo`**: an intentionally broken app that proves the whole loop live
@@ -62,11 +62,11 @@ apps/
 packages/
   event-schema/ Wire contract: Zod schemas (.), plain TS types (./types), zero-dep constants (./constants)
   shared/       Isomorphic, zero-dep logic: fingerprinting, stack parsing, URL redaction, vitals ratings
-  sdk/          @pulseed/sdk — published. Zero runtime dependencies (enforced by tsdown).
+  sdk/          @traceforge/sdk — published. Zero runtime dependencies (enforced by tsdown).
   ui/           shadcn/ui (Base UI, nova) components + design tokens (globals.css). Shared by both Next apps.
   eslint-config/ typescript-config/   Shared tooling.
 docs/PRD.md     Product requirements.
-docker-compose.yml   Local Postgres 17 (+ pulseed_test DB).
+docker-compose.yml   Local Postgres 17 (+ traceforge_test DB).
 ```
 
 ### Dependency rules (enforced by review, some by tooling)
@@ -106,7 +106,7 @@ These are settled. Changing one needs an explicit reason written into this file.
 | 11 | **DSN** = `https://<publicKey>@<host>/project/<projectId>` | Public key is write-only and rotatable. Dashboard credentials never reach the SDK. |
 | 12 | Ingestion accepts the key as header **or** `?key=`, and the body as `application/json` **or** `text/plain` | Unload flushes (`sendBeacon`, `keepalive`) must be CORS simple requests |
 | 13 | **Client-generated UUID** per event; PK `(project_id, id)`; `ON CONFLICT DO NOTHING` | Retries and offline replays are idempotent |
-| 14 | **The server computes the authoritative fingerprint** (`@pulseed/shared`) | Never trust the client for grouping; the SDK may compute the same value for dedupe |
+| 14 | **The server computes the authoritative fingerprint** (`@traceforge/shared`) | Never trust the client for grouping; the SDK may compute the same value for dedupe |
 | 15 | Browser timestamps are **skew-corrected** with `sentAt` vs server receive time | Wrong client clocks must not corrupt timelines |
 | 16 | Real-time uses **SSE** from the API, fed by an in-process pub/sub | PRD §24. Postgres LISTEN/NOTIFY is the path to multiple instances. |
 | 17 | shadcn **Base UI / nova**, neutral palette, **Geist Sans/Mono** | Calm, dense, developer-tool aesthetic |
@@ -116,6 +116,7 @@ These are settled. Changing one needs an explicit reason written into this file.
 | 21 | **One `react-is` and one `recharts` version** in the catalog | Two Recharts instances (from different peer resolutions) render empty charts |
 | 22 | The SDK **ignores Next.js RSC and prefetch fetches** (`_rsc` query parameter) | Otherwise every `<Link>` prefetch looks like an API call |
 | 23 | Web Vitals are **attributed to the hard-loaded page**, not the route at report time | Vitals often report after an SPA navigation |
+| 26 | `pnpm check` runs with **`--concurrency=3`** | On an 8 GB laptop, ~10 parallel heavy tasks swap hard; stalls then race the API tests' DB resets. CI keeps full parallelism |
 | 25 | In the Next apps, **`typecheck` runs after `build`** (`apps/*/turbo.json`) | `next build` rewrites `.next/types` while `next typegen && tsc` reads it; in parallel they race |
 | 24 | `get-session` is **not rate-limited**; the dashboard forwards `x-forwarded-for` | Server-side session checks share one IP; limiting them would throttle every user |
 
@@ -174,7 +175,7 @@ only in env. Logs redact `authorization`, `cookie` and the ingest key.
 **Performance budgets.**
 - SDK ≤ 10 KB min+brotli in total: about 6 KB of our code plus 2.9 KB for `web-vitals` (enforced by `size-limit`). Measured 9.2 KB at M2.
 - SDK main-thread work < 1% CPU in normal use.
-- Dashboard: LCP < 2.0 s, INP < 150 ms, CLS < 0.05 on the overview page (Pulseed monitors itself).
+- Dashboard: LCP < 2.0 s, INP < 150 ms, CLS < 0.05 on the overview page (TraceForge monitors itself).
 - Ingestion: p95 < 50 ms for a 20-event batch on the free tier.
 
 **Errors and logging.** API errors return `{ error, message }` with a correct status
@@ -199,14 +200,14 @@ disable the policy.
 
 ```bash
 pnpm install                 # Node >= 22.12 (see .nvmrc)
-pnpm db:up                   # Postgres 17 in Docker (also creates pulseed_test)
+pnpm db:up                   # Postgres 17 in Docker (also creates traceforge_test)
 pnpm db:migrate              # apply apps/api/drizzle migrations
 pnpm dev                     # api :4000 (PORT in apps/api/.env), dashboard :3000, demo :3001
 pnpm check                   # format:check + lint + typecheck + test + build: run before every commit
 pnpm db:seed                 # demo account + a week of realistic data
 pnpm e2e                     # Playwright: SDK in Chromium (+ full stack with E2E_FULLSTACK=1)
 pnpm db:generate --name <x>  # after editing apps/api/src/db/schema.ts
-pnpm --filter @pulseed/sdk size   # bundle budget
+pnpm --filter @traceforge/sdk size   # bundle budget
 ```
 
 Add a shadcn component (it lands in `packages/ui/src/components`):
@@ -229,10 +230,10 @@ acceptance criteria. Tick the box in this file when a milestone lands.
 - [x] `dashboard` + `demo`: Next 16 shells on the shared UI package
 
 ### M1 — Projects, auth, ingestion (backend MVP) ✅
-- [x] Better Auth (email + password, min 10 chars) in Fastify at `/api/auth/*`; tables in `apps/api/src/db/auth-schema.ts`; cookies `pulseed.*`, `httpOnly`, `sameSite=lax`, `secure` in production
-- [x] Project CRUD + key rotation (`routes/projects.ts`), owner-scoped (other users' projects → 404), max 20 per user, `pw_`/`pk_` ids via unbiased crypto sampling (`lib/ids.ts`), DSN built server-side (`lib/dsn.ts`)
+- [x] Better Auth (email + password, min 10 chars) in Fastify at `/api/auth/*`; tables in `apps/api/src/db/auth-schema.ts`; cookies `traceforge.*`, `httpOnly`, `sameSite=lax`, `secure` in production
+- [x] Project CRUD + key rotation (`routes/projects.ts`), owner-scoped (other users' projects → 404), max 20 per user, `tf_`/`pk_` ids via unbiased crypto sampling (`lib/ids.ts`), DSN built server-side (`lib/dsn.ts`)
 - [x] `POST /api/v1/events` (`routes/ingest.ts` + `services/ingest.ts`): 202/400/401/403/413/415/429, per-event rejection, in-batch id dedupe, skew correction, stack sanitizing, fingerprinting, one-transaction persist with issue upsert, exact affected users (`issue_users`), regression reopen, gzip with bomb cap, key cache with instant invalidation (`services/project-keys.ts`), in-process event bus for SSE (`services/event-bus.ts`)
-- [x] 49 API tests, including integration suites against `pulseed_test` (`*.int.test.ts`; skipped locally without Docker, never in CI)
+- [x] 49 API tests, including integration suites against `traceforge_test` (`*.int.test.ts`; skipped locally without Docker, never in CI)
 - [x] Accepted: live curl run — batch stored, replay deduplicated, bad key/JSON/size/session → 401/400/413/401
 
 ### M2 — SDK core (SDK MVP) ✅
@@ -256,7 +257,7 @@ acceptance criteria. Tick the box in this file when a milestone lands.
 - [ ] Deferred by the maintainer: GitHub repo, Changesets, npm publish with provenance, deploy (free host + Neon)
 
 ### M5 — Phase 2 (PRD §37)
-IndexedDB offline queue → Web Worker pipeline + the published benchmark page (worker vs main thread) → live SSE stream → advanced filtering and trends → React Error Boundary (`@pulseed/sdk/react`) → Next.js helper (`@pulseed/sdk/next`) → source maps (upload API + server-side symbolication)
+IndexedDB offline queue → Web Worker pipeline + the published benchmark page (worker vs main thread) → live SSE stream → advanced filtering and trends → React Error Boundary (`@traceforge/sdk/react`) → Next.js helper (`@traceforge/sdk/next`) → source maps (upload API + server-side symbolication)
 
 ### M6+ — Phases 3 and 4
 Alert rules, webhooks and Slack, releases and regression detection, resolution workflow, then rule-based **Engineering Insights** (PRD §39). No paid AI APIs.

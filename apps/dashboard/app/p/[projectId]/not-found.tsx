@@ -1,11 +1,11 @@
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Empty,
   EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from "@pulseed/ui/components/empty"
+} from "@traceforge/ui/components/empty"
 import Link from "next/link"
 
 export default function NotFound() {

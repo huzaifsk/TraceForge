@@ -29,7 +29,7 @@ describe.skipIf(!inject("dbAvailable"))("projects", () => {
     const { cookie } = await signUp(app)
     const project = await createProject(app, cookie, { name: "Shop", platform: "nextjs" })
 
-    expect(project.id).toMatch(/^pw_[a-z0-9]{12}$/)
+    expect(project.id).toMatch(/^tf_[a-z0-9]{12}$/)
     expect(project.publicKey).toMatch(/^pk_[A-Za-z0-9]{32}$/)
     expect(project.dsn).toBe(`http://${project.publicKey}@localhost:4000/project/${project.id}`)
   })

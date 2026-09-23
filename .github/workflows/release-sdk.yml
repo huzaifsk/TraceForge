@@ -1,6 +1,6 @@
 name: Release SDK
 
-# Publish @pulseed/sdk to npm when a tag like `sdk-v0.1.0` is pushed:
+# Publish @traceforge/sdk to npm when a tag like `sdk-v0.1.0` is pushed:
 #   git tag sdk-v0.1.0 && git push origin sdk-v0.1.0
 # Requires the repository secret NPM_TOKEN (an npm "Automation" token).
 
@@ -38,13 +38,13 @@ jobs:
           fi
 
       - name: Build and test the SDK
-        run: pnpm turbo run build test --filter=@pulseed/sdk...
+        run: pnpm turbo run build test --filter=@traceforge/sdk...
 
       - name: Bundle size budget
-        run: pnpm --filter @pulseed/sdk size
+        run: pnpm --filter @traceforge/sdk size
 
       - name: Publish
-        run: pnpm --filter @pulseed/sdk publish --access public --provenance --no-git-checks
+        run: pnpm --filter @traceforge/sdk publish --access public --provenance --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

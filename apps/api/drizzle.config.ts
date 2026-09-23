@@ -11,7 +11,7 @@ export default defineConfig({
   schema: "./src/db/schema.ts",
   out: "./drizzle",
   dbCredentials: {
-    url: process.env.DATABASE_URL ?? "postgres://pulseed:pulseed@localhost:5432/pulseed",
+    url: process.env.DATABASE_URL ?? "postgres://traceforge:traceforge@localhost:5432/traceforge",
   },
   strict: true,
   verbose: true,

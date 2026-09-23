@@ -1,3 +1,3 @@
-import { config } from "@pulseed/eslint-config/react-internal"
+import { config } from "@traceforge/eslint-config/react-internal"
 
 export default config

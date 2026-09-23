@@ -1,7 +1,7 @@
 "use client"
 
-import type { Vitals } from "@pulseed/event-schema"
-import { Tabs, TabsList, TabsTrigger } from "@pulseed/ui/components/tabs"
+import type { Vitals } from "@traceforge/event-schema"
+import { Tabs, TabsList, TabsTrigger } from "@traceforge/ui/components/tabs"
 import { useState } from "react"
 
 import { TimeSeriesChart } from "@/components/charts/time-series-chart"

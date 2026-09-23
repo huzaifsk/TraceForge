@@ -1,13 +1,13 @@
-import { issueDetailSchema } from "@pulseed/event-schema"
-import { Badge } from "@pulseed/ui/components/badge"
+import { issueDetailSchema } from "@traceforge/event-schema"
+import { Badge } from "@traceforge/ui/components/badge"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pulseed/ui/components/tabs"
+} from "@traceforge/ui/components/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@traceforge/ui/components/tabs"
 import { ChevronLeftIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"

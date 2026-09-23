@@ -8,7 +8,7 @@ import type { Env } from "../env"
 /** Email + password authentication for dashboard users (ADR 10). */
 export function createAuth(db: Database, env: Env) {
   return betterAuth({
-    appName: "Pulseed",
+    appName: "TraceForge",
     baseURL: env.PUBLIC_API_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
@@ -46,7 +46,7 @@ export function createAuth(db: Database, env: Env) {
       },
     },
     advanced: {
-      cookiePrefix: "pulseed",
+      cookiePrefix: "traceforge",
       useSecureCookies: env.NODE_ENV === "production",
       defaultCookieAttributes: { httpOnly: true, sameSite: "lax" },
       ipAddress: { ipAddressHeaders: ["x-forwarded-for", "cf-connecting-ip"] },

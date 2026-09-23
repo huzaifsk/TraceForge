@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events"
 
-import type { LiveEvent } from "@pulseed/event-schema"
+import type { LiveEvent } from "@traceforge/event-schema"
 
 type Listener = (events: readonly LiveEvent[]) => void
 

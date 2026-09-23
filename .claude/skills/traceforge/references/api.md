@@ -40,7 +40,7 @@ apps/api/src/
 
 - Routes are thin. They parse (Zod schema), authorize, call a service and shape the response.
 - Every route declares `schema.response` so that nothing leaks through serialization.
-- IDs: projects `pw_` + 12 base36 chars, public keys `pk_` + 32 base62 chars, both from `crypto.getRandomValues`.
+- IDs: projects `tf_` + 12 base36 chars, public keys `pk_` + 32 base62 chars, both from `crypto.getRandomValues`.
 - `buildApp({ env, logger })` must stay side-effect-free until `listen`, so tests use `app.inject`.
 - New env vars go in `env.ts`, `.env.example` and `turbo.json` (`env`/`globalEnv`). The lint rule `turbo/no-undeclared-env-vars` enforces this.
 
@@ -48,7 +48,7 @@ apps/api/src/
 
 `POST /api/v1/events?key=<publicKey>[&enc=gzip]`
 
-Also accepted: the header `x-pulseed-key: <publicKey>`, and `content-type` of `application/json` or `text/plain`.
+Also accepted: the header `x-traceforge-key: <publicKey>`, and `content-type` of `application/json` or `text/plain`.
 
 Register a raw-body content-type parser for `text/plain` and `application/octet-stream`
 on this route. The route gunzips when `enc=gzip` (with a decompressed-size cap of
@@ -170,7 +170,7 @@ tables (`user`, `session`, `account`, `verification`) and `issue_users`.
 
 ## 9. Testing
 
-- `app.inject` for route tests (no network). Integration tests run against `pulseed_test`
+- `app.inject` for route tests (no network). Integration tests run against `traceforge_test`
   (created by docker compose): migrate once in `globalSetup`, truncate between tests.
 - Required ingestion cases: 202 happy path; mixed valid and invalid events (`accepted`/`rejected` counts);
   401 for a bad key; 401 for a mismatched projectId; 403 for a disallowed origin; 413 for an oversized body; 400 for bad JSON;

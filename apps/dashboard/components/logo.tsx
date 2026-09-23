@@ -1,6 +1,6 @@
-import { cn } from "@pulseed/ui/lib/utils"
+import { cn } from "@traceforge/ui/lib/utils"
 
-/** Pulseed mark: a heartbeat trace inside a rounded square. */
+/** TraceForge mark: a heartbeat trace inside a rounded square. */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg
@@ -27,7 +27,7 @@ export function Logo({ className }: { className?: string }) {
       className={cn("flex items-center gap-2 text-base font-semibold tracking-tight", className)}
     >
       <LogoMark />
-      Pulseed
+      TraceForge
     </span>
   )
 }

@@ -3,7 +3,7 @@
  *
  *   pnpm db:seed
  *
- * Signs up demo@pulseed.local (password: correct-horse-battery) if needed,
+ * Signs up demo@traceforge.local (password: correct-horse-battery) if needed,
  * recreates the "Acme Storefront" project, and pushes synthetic sessions
  * through the real ingestion pipeline (validation, fingerprinting, issue
  * grouping, projections), so the dashboard shows exactly what production would.
@@ -11,8 +11,8 @@
  */
 import { randomUUID } from "node:crypto"
 
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
-import { rateWebVital } from "@pulseed/shared"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
+import { rateWebVital } from "@traceforge/shared"
 import { and, eq } from "drizzle-orm"
 
 import { createAuth } from "../auth/auth"
@@ -29,7 +29,7 @@ try {
   // No .env file — rely on the real environment.
 }
 
-const DEMO_EMAIL = "demo@pulseed.local"
+const DEMO_EMAIL = "demo@traceforge.local"
 const DEMO_PASSWORD = "correct-horse-battery"
 const PROJECT_NAME = "Acme Storefront"
 const DAYS = 6.5

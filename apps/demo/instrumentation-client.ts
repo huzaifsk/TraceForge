@@ -1,11 +1,11 @@
-import { init } from "@pulseed/sdk"
+import { init } from "@traceforge/sdk"
 
 /**
  * Runs before the demo hydrates (Next.js instrumentation-client), exactly how a
- * real app would install Pulseed. `beforeSend` also feeds the on-page session
+ * real app would install TraceForge. `beforeSend` also feeds the on-page session
  * log so visitors can watch what the SDK captures.
  */
-const dsn = process.env.NEXT_PUBLIC_PULSEED_DSN
+const dsn = process.env.NEXT_PUBLIC_TRACEFORGE_DSN
 
 if (dsn) {
   init({
@@ -15,10 +15,10 @@ if (dsn) {
     flushIntervalMs: 1_000,
     debug: process.env.NODE_ENV !== "production",
     beforeSend(event) {
-      window.dispatchEvent(new CustomEvent("pulseed:captured", { detail: event }))
+      window.dispatchEvent(new CustomEvent("traceforge:captured", { detail: event }))
       return event
     },
   })
 } else {
-  console.warn("[demo] NEXT_PUBLIC_PULSEED_DSN is not set; Pulseed is disabled.")
+  console.warn("[demo] NEXT_PUBLIC_TRACEFORGE_DSN is not set; TraceForge is disabled.")
 }

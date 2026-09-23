@@ -1,4 +1,4 @@
-import type { NavigationKind } from "@pulseed/event-schema/types"
+import type { NavigationKind } from "@traceforge/event-schema/types"
 
 import type { Integration } from "../hub"
 

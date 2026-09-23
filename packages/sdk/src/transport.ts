@@ -1,5 +1,5 @@
-import { INGEST_KEY_QUERY, SCHEMA_VERSION } from "@pulseed/event-schema/constants"
-import type { IngestBatch, MonitoringEvent } from "@pulseed/event-schema/types"
+import { INGEST_KEY_QUERY, SCHEMA_VERSION } from "@traceforge/event-schema/constants"
+import type { IngestBatch, MonitoringEvent } from "@traceforge/event-schema/types"
 
 import type { ParsedDsn } from "./dsn"
 

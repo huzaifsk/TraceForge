@@ -1,7 +1,7 @@
 {
-  "name": "@pulseed/event-schema",
+  "name": "@traceforge/event-schema",
   "version": "0.1.0",
-  "description": "Wire-format contract (Zod schemas + TypeScript types) for Pulseed monitoring events.",
+  "description": "Wire-format contract (Zod schemas + TypeScript types) for TraceForge monitoring events.",
   "type": "module",
   "license": "MIT",
   "sideEffects": false,
@@ -35,8 +35,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "eslint": "catalog:",
     "tsdown": "^0.23.0",
     "typescript": "catalog:",

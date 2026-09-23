@@ -1,7 +1,7 @@
 "use client"
 
-import { Badge } from "@pulseed/ui/components/badge"
-import { Button } from "@pulseed/ui/components/button"
+import { Badge } from "@traceforge/ui/components/badge"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Card,
   CardAction,
@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 import {
   BugIcon,
   CircleSlashIcon,

@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto"
 import { request as httpRequest } from "node:http"
 import type { AddressInfo } from "node:net"
 
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
 import { afterAll, beforeAll, beforeEach, describe, expect, inject, it } from "vitest"
 
 import type { App } from "../app"

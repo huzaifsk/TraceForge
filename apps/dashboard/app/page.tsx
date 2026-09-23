@@ -1,4 +1,4 @@
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import { ArrowRightIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -13,11 +13,11 @@ import { GITHUB_URL, SiteHeader } from "@/components/landing/site-header"
 import { SiteFooter } from "@/components/landing/site-footer"
 
 export const metadata: Metadata = {
-  title: { absolute: "Pulseed — open-source frontend observability" },
+  title: { absolute: "TraceForge — open-source frontend observability" },
   description:
     "See the JavaScript errors, failing API calls and slow pages your users hit in production. A 9 KB SDK, a real-time dashboard, open source.",
   openGraph: {
-    title: "Pulseed — open-source frontend observability",
+    title: "TraceForge — open-source frontend observability",
     description:
       "JavaScript errors, API failures and Core Web Vitals from real users, in a 9 KB SDK.",
     images: [{ url: "/landing/overview-light.png", width: 2880, height: 1800 }],
@@ -47,8 +47,8 @@ export default function LandingPage() {
               See what breaks for your users
             </h1>
             <p className="text-lg text-pretty text-muted-foreground">
-              Pulseed catches the JavaScript errors, failing API calls and slow pages your users hit
-              in production, groups them into issues, and shows you which ones matter.
+              TraceForge catches the JavaScript errors, failing API calls and slow pages your users
+              hit in production, groups them into issues, and shows you which ones matter.
             </p>
           </div>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
@@ -65,7 +65,7 @@ export default function LandingPage() {
               Star on GitHub
             </Button>
           </div>
-          <CodeBlock code="npm install @pulseed/sdk" className="w-full max-w-sm text-left" />
+          <CodeBlock code="npm install @traceforge/sdk" className="w-full max-w-sm text-left" />
         </section>
 
         <div className="mx-auto w-full max-w-6xl px-4 lg:px-6">

@@ -1,6 +1,6 @@
 "use client"
 
-import type { Project } from "@pulseed/event-schema"
+import type { Project } from "@traceforge/event-schema"
 import {
   Command,
   CommandDialog,
@@ -9,7 +9,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@pulseed/ui/components/command"
+} from "@traceforge/ui/components/command"
 import { CopyIcon, FolderIcon, MoonIcon, PlusIcon, SunIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"

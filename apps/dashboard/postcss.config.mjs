@@ -1,1 +1,1 @@
-export { default } from "@pulseed/ui/postcss.config"
+export { default } from "@traceforge/ui/postcss.config"

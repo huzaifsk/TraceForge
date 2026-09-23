@@ -43,8 +43,8 @@ export function Privacy() {
           Your users stay anonymous
         </h2>
         <p className="text-muted-foreground">
-          Pulseed collects the technical context needed to debug, and nothing else. The defaults are
-          the private ones.
+          TraceForge collects the technical context needed to debug, and nothing else. The defaults
+          are the private ones.
         </p>
       </div>
       <div className="mt-10 grid gap-6 rounded-xl border p-6 md:grid-cols-2 md:p-8">

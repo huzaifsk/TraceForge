@@ -10,8 +10,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@pulseed/ui/components/dialog"
-import { InputGroup, InputGroupAddon } from "@pulseed/ui/components/input-group"
+} from "@traceforge/ui/components/dialog"
+import { InputGroup, InputGroupAddon } from "@traceforge/ui/components/input-group"
 import { SearchIcon, CheckIcon } from "lucide-react"
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {

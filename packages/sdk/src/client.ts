@@ -1,5 +1,5 @@
-import { LIMITS, SDK_DEFAULTS } from "@pulseed/event-schema/constants"
-import type { DeviceContext, MonitoringEvent } from "@pulseed/event-schema/types"
+import { LIMITS, SDK_DEFAULTS } from "@traceforge/event-schema/constants"
+import type { DeviceContext, MonitoringEvent } from "@traceforge/event-schema/types"
 
 import { getDeviceContext } from "./context/device"
 import { getPageContext } from "./context/page"
@@ -44,7 +44,7 @@ export function createClient(
 ): Client {
   const log = (...args: unknown[]) => {
     // eslint-disable-next-line no-console -- opt-in diagnostics (`debug: true`)
-    if (options.debug) console.info("[Pulseed]", ...args)
+    if (options.debug) console.info("[TraceForge]", ...args)
   }
 
   // Capture the native fetch before instrumentation, so our own deliveries are never recorded.

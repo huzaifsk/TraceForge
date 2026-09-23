@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Card,
   CardContent,
@@ -8,10 +8,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
-import { Field, FieldError, FieldGroup, FieldLabel } from "@pulseed/ui/components/field"
-import { Input } from "@pulseed/ui/components/input"
-import { Spinner } from "@pulseed/ui/components/spinner"
+} from "@traceforge/ui/components/card"
+import { Field, FieldError, FieldGroup, FieldLabel } from "@traceforge/ui/components/field"
+import { Input } from "@traceforge/ui/components/input"
+import { Spinner } from "@traceforge/ui/components/spinner"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -85,7 +85,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
       router.replace(safeNext(searchParams.get("next")))
       router.refresh()
     } catch {
-      setError("Can't reach Pulseed. Check your connection and try again.")
+      setError("Can't reach TraceForge. Check your connection and try again.")
     } finally {
       setPending(false)
     }
@@ -152,7 +152,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
           {copy.submit}
         </Button>
         <p className="text-sm text-muted-foreground">
-          {mode === "login" ? "New to Pulseed? " : "Already have an account? "}
+          {mode === "login" ? "New to TraceForge? " : "Already have an account? "}
           <Link
             href={mode === "login" ? "/signup" : "/login"}
             className="font-medium text-foreground underline-offset-4 hover:underline"

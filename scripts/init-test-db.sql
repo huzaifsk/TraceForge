@@ -1,1 +1,1 @@
-CREATE DATABASE pulseed_test OWNER pulseed;
+CREATE DATABASE traceforge_test OWNER traceforge;

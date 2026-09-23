@@ -1,4 +1,4 @@
-import type { WebVitalName, WebVitalRating } from "@pulseed/event-schema/constants"
+import type { WebVitalName, WebVitalRating } from "@traceforge/event-schema/constants"
 
 /**
  * Official Core Web Vitals thresholds (web.dev). A value <= `good` is good,

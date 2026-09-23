@@ -8,7 +8,7 @@
 | SDK units | Vitest + happy-dom | Integrations, pipeline, queue timers (`vi.useFakeTimers`), patch/unpatch safety |
 | SDK in real browsers | Playwright (Chromium, Firefox, WebKit) | The IIFE build on a fixture page → a stub ingest server; vitals; offline replay |
 | API routes | Vitest + `app.inject` | Status codes, validation, auth, rate limits |
-| API + DB | Vitest against `pulseed_test` | Idempotency, issue upsert, aggregations, retention |
+| API + DB | Vitest against `traceforge_test` | Idempotency, issue upsert, aggregations, retention |
 | Dashboard components | Vitest + React Testing Library | Rendering, states, hostile input rendered as text |
 | End to end | Playwright | Demo trigger → dashboard shows it; auth flows; axe; light and dark screenshots |
 

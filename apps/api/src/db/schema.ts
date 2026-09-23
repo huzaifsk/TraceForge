@@ -3,7 +3,7 @@ import {
   EVENT_TYPES,
   WEB_VITAL_NAMES,
   WEB_VITAL_RATINGS,
-} from "@pulseed/event-schema/constants"
+} from "@traceforge/event-schema/constants"
 import { sql } from "drizzle-orm"
 import {
   bigint,
@@ -43,7 +43,7 @@ const createdAt = () => timestamp("created_at", { withTimezone: true }).notNull(
 export const projects = pgTable(
   "projects",
   {
-    /** Public project id, e.g. pw_12345abc. */
+    /** Public project id, e.g. tf_12345abc. */
     id: text("id").primaryKey(),
     name: text("name").notNull(),
     platform: platformEnum("platform").notNull().default("react"),

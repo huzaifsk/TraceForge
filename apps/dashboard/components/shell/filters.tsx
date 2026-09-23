@@ -1,6 +1,6 @@
 "use client"
 
-import { ENVIRONMENTS, TIME_RANGES } from "@pulseed/event-schema"
+import { ENVIRONMENTS, TIME_RANGES } from "@traceforge/event-schema"
 import {
   Select,
   SelectContent,
@@ -8,8 +8,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@pulseed/ui/components/select"
-import { ToggleGroup, ToggleGroupItem } from "@pulseed/ui/components/toggle-group"
+} from "@traceforge/ui/components/select"
+import { ToggleGroup, ToggleGroupItem } from "@traceforge/ui/components/toggle-group"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useTransition } from "react"
 

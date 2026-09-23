@@ -1,6 +1,6 @@
-import type { Environment } from "@pulseed/event-schema/constants"
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
-import { ENVIRONMENTS, SDK_DEFAULTS } from "@pulseed/event-schema/constants"
+import type { Environment } from "@traceforge/event-schema/constants"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
+import { ENVIRONMENTS, SDK_DEFAULTS } from "@traceforge/event-schema/constants"
 
 import { type ParsedDsn, parseDsn } from "./dsn"
 
@@ -29,7 +29,7 @@ export interface PrivacyOptions {
   captureUserContext?: boolean
 }
 
-export interface PulseedOptions {
+export interface TraceForgeOptions {
   /** Project DSN from the dashboard: https://<publicKey>@<host>/project/<projectId> */
   dsn: string
   environment?: Environment
@@ -73,7 +73,7 @@ export interface ResolvedOptions {
   ignoreErrors: ReadonlyArray<string | RegExp>
   ignoreUrls: ReadonlyArray<string | RegExp>
   tags: Readonly<Record<string, string>>
-  beforeSend: PulseedOptions["beforeSend"]
+  beforeSend: TraceForgeOptions["beforeSend"]
   debug: boolean
 }
 
@@ -87,7 +87,7 @@ function positiveInt(value: number | undefined, fallback: number, max: number): 
 }
 
 /** Validate user options and apply defaults. Never throws. */
-export function resolveOptions(input: PulseedOptions): ResolveResult {
+export function resolveOptions(input: TraceForgeOptions): ResolveResult {
   if (!input || typeof input.dsn !== "string") {
     return { ok: false, error: "`dsn` is required." }
   }

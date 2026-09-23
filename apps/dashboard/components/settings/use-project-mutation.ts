@@ -1,6 +1,6 @@
 "use client"
 
-import { projectSchema, type Project } from "@pulseed/event-schema"
+import { projectSchema, type Project } from "@traceforge/event-schema"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -36,7 +36,7 @@ export function useProjectMutation(projectId: string) {
       router.refresh()
       return { ok: true, project }
     } catch {
-      return { ok: false, message: "Can't reach Pulseed. Check your connection." }
+      return { ok: false, message: "Can't reach TraceForge. Check your connection." }
     } finally {
       setPending(false)
     }

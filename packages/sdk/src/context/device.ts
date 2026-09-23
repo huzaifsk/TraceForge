@@ -1,5 +1,5 @@
-import type { DeviceType } from "@pulseed/event-schema/constants"
-import type { DeviceContext } from "@pulseed/event-schema/types"
+import type { DeviceType } from "@traceforge/event-schema/constants"
+import type { DeviceContext } from "@traceforge/event-schema/types"
 
 // Order matters: Edge and Opera also claim "Chrome", and Chrome claims "Safari".
 const BROWSERS: ReadonlyArray<[name: string, pattern: RegExp]> = [

@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from "@pulseed/ui/components/card"
-import { Skeleton } from "@pulseed/ui/components/skeleton"
+import { Card, CardContent, CardHeader } from "@traceforge/ui/components/card"
+import { Skeleton } from "@traceforge/ui/components/skeleton"
 
 /** Same geometry as the real header, so nothing shifts when data arrives. */
 export function HeaderSkeleton() {

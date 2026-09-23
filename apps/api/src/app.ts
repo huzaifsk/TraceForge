@@ -3,7 +3,7 @@ import { STATUS_CODES } from "node:http"
 import cors from "@fastify/cors"
 import helmet from "@fastify/helmet"
 import rateLimit from "@fastify/rate-limit"
-import { LIMITS } from "@pulseed/event-schema/constants"
+import { LIMITS } from "@traceforge/event-schema/constants"
 import Fastify, { type FastifyError, type FastifyServerOptions } from "fastify"
 import {
   hasZodFastifySchemaValidationErrors,
@@ -44,7 +44,11 @@ export async function buildApp({ env, logger }: BuildAppOptions) {
     logger: logger ?? {
       level: env.LOG_LEVEL,
       // Never log credentials that may appear in headers.
-      redact: ["req.headers.authorization", "req.headers.cookie", "req.headers['x-pulseed-key']"],
+      redact: [
+        "req.headers.authorization",
+        "req.headers.cookie",
+        "req.headers['x-traceforge-key']",
+      ],
       ...(env.NODE_ENV === "development" && { transport: { target: "pino-pretty" } }),
     },
     bodyLimit: LIMITS.maxBatchBytes,

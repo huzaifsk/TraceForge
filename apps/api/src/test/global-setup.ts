@@ -15,7 +15,8 @@ declare module "vitest" {
  */
 export default async function setup(project: TestProject) {
   // globalSetup runs outside the test workers, so `test.env` does not apply here.
-  const url = process.env.DATABASE_URL ?? "postgres://pulseed:pulseed@localhost:5432/pulseed_test"
+  const url =
+    process.env.DATABASE_URL ?? "postgres://traceforge:traceforge@localhost:5432/traceforge_test"
 
   const sql = postgres(url, { max: 1, onnotice: () => {}, connect_timeout: 3 })
   try {

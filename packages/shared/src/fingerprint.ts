@@ -1,4 +1,4 @@
-import type { StackFrame } from "@pulseed/event-schema/types"
+import type { StackFrame } from "@traceforge/event-schema/types"
 
 import { hash53 } from "./hash"
 import { normalizeFilename } from "./stack"

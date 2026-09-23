@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Empty,
   EmptyContent,
@@ -8,7 +8,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@pulseed/ui/components/empty"
+} from "@traceforge/ui/components/empty"
 import { TriangleAlertIcon } from "lucide-react"
 
 /** Route-level fallback. Never shows raw server error messages. */
@@ -25,7 +25,9 @@ export default function ProjectError({
           <TriangleAlertIcon />
         </EmptyMedia>
         <EmptyTitle>This page couldn&apos;t load</EmptyTitle>
-        <EmptyDescription>The Pulseed API may be unavailable. Your data is safe.</EmptyDescription>
+        <EmptyDescription>
+          The TraceForge API may be unavailable. Your data is safe.
+        </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <Button onClick={reset}>Try again</Button>

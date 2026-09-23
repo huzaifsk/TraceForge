@@ -1,4 +1,4 @@
-import type { Platform } from "@pulseed/event-schema"
+import type { Platform } from "@traceforge/event-schema"
 
 export const PLATFORM_LABELS: Record<Platform, string> = {
   nextjs: "Next.js",

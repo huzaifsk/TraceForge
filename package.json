@@ -1,5 +1,5 @@
 {
-  "name": "pulseed",
+  "name": "traceforge",
   "version": "0.0.0",
   "private": true,
   "description": "Open-source frontend observability: a lightweight browser SDK, ingestion API and dashboard for JS errors, API failures and Web Vitals.",
@@ -12,18 +12,18 @@
     "test": "turbo run test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm format:check && turbo run lint typecheck test build",
+    "check": "pnpm format:check && turbo run lint typecheck test build --concurrency=3",
     "db:up": "docker compose up -d postgres",
     "db:down": "docker compose down",
-    "db:generate": "pnpm --filter @pulseed/api db:generate",
-    "db:migrate": "pnpm --filter @pulseed/api db:migrate",
+    "db:generate": "pnpm --filter @traceforge/api db:generate",
+    "db:migrate": "pnpm --filter @traceforge/api db:migrate",
     "clean": "turbo run clean && rm -rf node_modules .turbo",
     "e2e": "turbo run test:e2e",
-    "db:seed": "pnpm --filter @pulseed/api db:seed"
+    "db:seed": "pnpm --filter @traceforge/api db:seed"
   },
   "devDependencies": {
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "turbo": "^2.11.3",

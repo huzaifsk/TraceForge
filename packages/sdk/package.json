@@ -1,7 +1,7 @@
 {
-  "name": "@pulseed/sdk",
+  "name": "@traceforge/sdk",
   "version": "0.1.0",
-  "description": "Lightweight browser SDK for Pulseed: JS errors, API failures, Web Vitals and navigation \u2014 batched, retried and privacy-first.",
+  "description": "Lightweight browser SDK for TraceForge: JS errors, API failures, Web Vitals and navigation \u2014 batched, retried and privacy-first.",
   "keywords": [
     "observability",
     "monitoring",
@@ -12,13 +12,13 @@
     "react",
     "nextjs"
   ],
-  "homepage": "https://github.com/huzaifsk/Pulseed#readme",
+  "homepage": "https://github.com/huzaifsk/TraceForge#readme",
   "bugs": {
-    "url": "https://github.com/huzaifsk/Pulseed/issues"
+    "url": "https://github.com/huzaifsk/TraceForge/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/huzaifsk/Pulseed.git",
+    "url": "git+https://github.com/huzaifsk/TraceForge.git",
     "directory": "packages/sdk"
   },
   "license": "MIT",
@@ -32,8 +32,8 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "unpkg": "./dist/pulseed.iife.js",
-  "jsdelivr": "./dist/pulseed.iife.js",
+  "unpkg": "./dist/traceforge.iife.js",
+  "jsdelivr": "./dist/traceforge.iife.js",
   "exports": {
     ".": {
       "import": {
@@ -57,10 +57,10 @@
     "clean": "rm -rf dist .turbo coverage"
   },
   "devDependencies": {
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/event-schema": "workspace:*",
-    "@pulseed/shared": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/event-schema": "workspace:*",
+    "@traceforge/shared": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "@size-limit/preset-small-lib": "^14.0.0",
     "eslint": "catalog:",
     "happy-dom": "^20.14.5",

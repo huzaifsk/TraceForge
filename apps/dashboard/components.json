@@ -12,10 +12,10 @@
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
-    "hooks": "@pulseed/ui/hooks",
+    "hooks": "@traceforge/ui/hooks",
     "lib": "@/lib",
-    "utils": "@pulseed/ui/lib/utils",
-    "ui": "@pulseed/ui/components"
+    "utils": "@traceforge/ui/lib/utils",
+    "ui": "@traceforge/ui/components"
   },
   "rtl": false,
   "menuColor": "default",

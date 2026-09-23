@@ -1,7 +1,7 @@
 import { safely, uuid } from "../util"
 
-const SESSION_KEY = "pulseed:sid"
-const ANONYMOUS_KEY = "pulseed:aid"
+const SESSION_KEY = "traceforge:sid"
+const ANONYMOUS_KEY = "traceforge:aid"
 
 /** Read or create a random id in `storage`. Storage can throw (private mode, sandboxed iframes). */
 function persistentId(getStorage: () => Storage, key: string): string {

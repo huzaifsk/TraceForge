@@ -1,6 +1,6 @@
 "use client"
 
-import { PLATFORMS, type Platform, type Project } from "@pulseed/event-schema"
+import { PLATFORMS, type Platform, type Project } from "@traceforge/event-schema"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -10,8 +10,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@pulseed/ui/components/alert-dialog"
-import { Button } from "@pulseed/ui/components/button"
+} from "@traceforge/ui/components/alert-dialog"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Card,
   CardContent,
@@ -19,7 +19,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 import {
   Field,
   FieldDescription,
@@ -28,11 +28,11 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "@pulseed/ui/components/field"
-import { Input } from "@pulseed/ui/components/input"
-import { Spinner } from "@pulseed/ui/components/spinner"
-import { Textarea } from "@pulseed/ui/components/textarea"
-import { ToggleGroup, ToggleGroupItem } from "@pulseed/ui/components/toggle-group"
+} from "@traceforge/ui/components/field"
+import { Input } from "@traceforge/ui/components/input"
+import { Spinner } from "@traceforge/ui/components/spinner"
+import { Textarea } from "@traceforge/ui/components/textarea"
+import { ToggleGroup, ToggleGroupItem } from "@traceforge/ui/components/toggle-group"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -61,7 +61,7 @@ function GeneralSection({ project }: { project: Project }) {
     <Card>
       <CardHeader>
         <CardTitle>General</CardTitle>
-        <CardDescription>How this project appears in Pulseed.</CardDescription>
+        <CardDescription>How this project appears in TraceForge.</CardDescription>
       </CardHeader>
       <CardContent>
         <form id="general" onSubmit={save} noValidate>

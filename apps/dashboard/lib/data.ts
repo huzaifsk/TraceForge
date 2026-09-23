@@ -1,6 +1,6 @@
 import "server-only"
 
-import { projectSchema } from "@pulseed/event-schema"
+import { projectSchema } from "@traceforge/event-schema"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { z } from "zod"

@@ -1,8 +1,8 @@
 "use client"
 
-import type { IssueStatus } from "@pulseed/event-schema"
-import { Button } from "@pulseed/ui/components/button"
-import { ButtonGroup } from "@pulseed/ui/components/button-group"
+import type { IssueStatus } from "@traceforge/event-schema"
+import { Button } from "@traceforge/ui/components/button"
+import { ButtonGroup } from "@traceforge/ui/components/button-group"
 import { CircleCheckIcon, EyeOffIcon, RotateCcwIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useOptimistic, useTransition } from "react"

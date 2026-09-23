@@ -1,3 +1,3 @@
-import { config } from "@pulseed/eslint-config/base"
+import { config } from "@traceforge/eslint-config/base"
 
 export default config

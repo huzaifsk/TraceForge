@@ -1,5 +1,5 @@
 {
-  "name": "@pulseed/e2e",
+  "name": "@traceforge/e2e",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,10 +12,10 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/event-schema": "workspace:*",
-    "@pulseed/sdk": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/event-schema": "workspace:*",
+    "@traceforge/sdk": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "typescript": "catalog:"

@@ -1,4 +1,4 @@
 {
-  "extends": "@pulseed/typescript-config/library.json",
+  "extends": "@traceforge/typescript-config/library.json",
   "include": ["src", "*.config.ts"]
 }

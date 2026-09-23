@@ -1,10 +1,10 @@
 import { CodeBlock } from "@/components/code-block"
 
 const INIT = `// instrumentation-client.ts (Next.js) or main.tsx (React)
-import { init } from "@pulseed/sdk"
+import { init } from "@traceforge/sdk"
 
 init({
-  dsn: process.env.NEXT_PUBLIC_PULSEED_DSN!,
+  dsn: process.env.NEXT_PUBLIC_TRACEFORGE_DSN!,
   environment: "production",
 })`
 
@@ -12,7 +12,7 @@ const STEPS = [
   {
     title: "Install the SDK",
     body: "One package, no dependencies.",
-    code: "npm install @pulseed/sdk",
+    code: "npm install @traceforge/sdk",
     label: "Terminal",
   },
   {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@pulseed/ui/components/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@traceforge/ui/components/tooltip"
 import { useSyncExternalStore } from "react"
 
 import { formatDateTime, formatRelative } from "@/lib/format"

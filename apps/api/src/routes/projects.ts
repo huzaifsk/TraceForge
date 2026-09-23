@@ -1,4 +1,4 @@
-import { projectSchema } from "@pulseed/event-schema"
+import { projectSchema } from "@traceforge/event-schema"
 import { and, count, desc, eq, getTableColumns, sql } from "drizzle-orm"
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod"
 import { z } from "zod"

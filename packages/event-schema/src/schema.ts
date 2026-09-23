@@ -23,7 +23,7 @@ const durationMs = nonNegative.max(600_000)
 
 export const projectIdSchema = z
   .string()
-  .regex(/^pw_[a-z0-9]{8,32}$/, "projectId must look like pw_xxxxxxxx")
+  .regex(/^tf_[a-z0-9]{8,32}$/, "projectId must look like tf_xxxxxxxx")
 
 export const eventTypeSchema = z.enum(EVENT_TYPES)
 export const environmentSchema = z.enum(ENVIRONMENTS)

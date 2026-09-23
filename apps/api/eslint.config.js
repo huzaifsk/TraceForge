@@ -1,3 +1,3 @@
-import { nodeConfig } from "@pulseed/eslint-config/node"
+import { nodeConfig } from "@traceforge/eslint-config/node"
 
 export default nodeConfig

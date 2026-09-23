@@ -1,6 +1,6 @@
 /**
  * Dashboard query API contract (API → dashboard). Separate from the ingestion
- * wire format: these shapes are internal to Pulseed and may evolve with
+ * wire format: these shapes are internal to TraceForge and may evolve with
  * the dashboard, but both sides validate against the same schemas.
  */
 import { z } from "zod"

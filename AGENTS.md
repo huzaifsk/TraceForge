@@ -1,7 +1,7 @@
 # Agent instructions
 
 See [CLAUDE.md](CLAUDE.md) and the project skill at
-[.claude/skills/pulseed/SKILL.md](.claude/skills/pulseed/SKILL.md).
+[.claude/skills/traceforge/SKILL.md](.claude/skills/traceforge/SKILL.md).
 
 <!-- BEGIN:nextjs-agent-rules -->
 

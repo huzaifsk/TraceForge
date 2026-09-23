@@ -1,5 +1,5 @@
 {
-  "name": "@pulseed/dashboard",
+  "name": "@traceforge/dashboard",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -14,9 +14,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@pulseed/event-schema": "workspace:*",
-    "@pulseed/shared": "workspace:*",
-    "@pulseed/ui": "workspace:*",
+    "@traceforge/event-schema": "workspace:*",
+    "@traceforge/shared": "workspace:*",
+    "@traceforge/ui": "workspace:*",
     "lucide-react": "^1.47.0",
     "next": "catalog:",
     "next-themes": "^0.4.6",
@@ -29,8 +29,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",

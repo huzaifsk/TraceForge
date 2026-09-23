@@ -1,9 +1,9 @@
-import type { IngestBatch, MonitoringEvent } from "@pulseed/event-schema/types"
+import type { IngestBatch, MonitoringEvent } from "@traceforge/event-schema/types"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { close, flush, getClient, init, type PulseedOptions } from "./index"
+import { close, flush, getClient, init, type TraceForgeOptions } from "./index"
 
-const DSN = "https://pk_test@api.test/project/pw_12345abc"
+const DSN = "https://pk_test@api.test/project/tf_12345abc"
 const INGEST = "https://api.test/api/v1/events"
 
 let appFetch: ReturnType<typeof vi.fn>
@@ -33,7 +33,7 @@ function installFetch(appStatus = 200) {
   window.fetch = appFetch as unknown as typeof fetch
 }
 
-const start = (options: Partial<PulseedOptions> = {}) =>
+const start = (options: Partial<TraceForgeOptions> = {}) =>
   init({
     dsn: DSN,
     // Keep tests deterministic: vitals and timing need a real browser.

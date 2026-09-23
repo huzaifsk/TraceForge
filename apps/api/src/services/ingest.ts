@@ -1,19 +1,19 @@
-import { LIMITS } from "@pulseed/event-schema/constants"
-import { monitoringEventSchema } from "@pulseed/event-schema"
+import { LIMITS } from "@traceforge/event-schema/constants"
+import { monitoringEventSchema } from "@traceforge/event-schema"
 import type {
   ApiErrorEvent,
   ErrorEvent,
   MonitoringEvent,
   StackFrame,
   UnhandledRejectionEvent,
-} from "@pulseed/event-schema/types"
+} from "@traceforge/event-schema/types"
 import {
   computeFingerprint,
   hash53,
   normalizeEndpoint,
   normalizeFilename,
   parseStack,
-} from "@pulseed/shared"
+} from "@traceforge/shared"
 import { sql } from "drizzle-orm"
 
 import type { Database } from "../db/client"

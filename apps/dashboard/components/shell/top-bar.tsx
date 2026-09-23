@@ -1,9 +1,9 @@
 "use client"
 
-import { Kbd } from "@pulseed/ui/components/kbd"
-import { Button } from "@pulseed/ui/components/button"
-import { Separator } from "@pulseed/ui/components/separator"
-import { SidebarTrigger } from "@pulseed/ui/components/sidebar"
+import { Kbd } from "@traceforge/ui/components/kbd"
+import { Button } from "@traceforge/ui/components/button"
+import { Separator } from "@traceforge/ui/components/separator"
+import { SidebarTrigger } from "@traceforge/ui/components/sidebar"
 import { SearchIcon } from "lucide-react"
 import { useSelectedLayoutSegment } from "next/navigation"
 

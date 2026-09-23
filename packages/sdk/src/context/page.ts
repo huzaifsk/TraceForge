@@ -1,6 +1,6 @@
-import { LIMITS } from "@pulseed/event-schema/constants"
-import type { PageContext } from "@pulseed/event-schema/types"
-import { redactUrl } from "@pulseed/shared"
+import { LIMITS } from "@traceforge/event-schema/constants"
+import type { PageContext } from "@traceforge/event-schema/types"
+import { redactUrl } from "@traceforge/shared"
 
 import { truncate } from "../util"
 

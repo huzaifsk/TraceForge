@@ -1,5 +1,5 @@
-import { overviewSchema } from "@pulseed/event-schema"
-import { Button } from "@pulseed/ui/components/button"
+import { overviewSchema } from "@traceforge/event-schema"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Card,
   CardAction,
@@ -7,8 +7,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@pulseed/ui/components/empty"
+} from "@traceforge/ui/components/card"
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@traceforge/ui/components/empty"
 import { BugIcon, NetworkIcon, TriangleAlertIcon, UsersIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"

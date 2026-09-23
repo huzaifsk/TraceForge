@@ -1,13 +1,13 @@
 import { gunzip } from "node:zlib"
 import { promisify } from "node:util"
 
-import { ingestBatchSchema } from "@pulseed/event-schema"
+import { ingestBatchSchema } from "@traceforge/event-schema"
 import {
   INGEST_KEY_HEADER,
   INGEST_KEY_QUERY,
   INGEST_PATH,
   LIMITS,
-} from "@pulseed/event-schema/constants"
+} from "@traceforge/event-schema/constants"
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod"
 import { z } from "zod"
 

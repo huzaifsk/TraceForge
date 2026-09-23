@@ -1,19 +1,19 @@
-import { vitalsSchema } from "@pulseed/event-schema"
-import { rateWebVital } from "@pulseed/shared"
+import { vitalsSchema } from "@traceforge/event-schema"
+import { rateWebVital } from "@traceforge/shared"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@pulseed/ui/components/empty"
+} from "@traceforge/ui/components/empty"
 import {
   Table,
   TableBody,
@@ -21,8 +21,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pulseed/ui/components/table"
-import { cn } from "@pulseed/ui/lib/utils"
+} from "@traceforge/ui/components/table"
+import { cn } from "@traceforge/ui/lib/utils"
 import { GaugeIcon } from "lucide-react"
 import type { Metadata } from "next"
 

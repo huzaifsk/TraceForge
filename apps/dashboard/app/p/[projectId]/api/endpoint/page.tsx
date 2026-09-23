@@ -1,11 +1,11 @@
-import { endpointDetailSchema } from "@pulseed/event-schema"
+import { endpointDetailSchema } from "@traceforge/event-schema"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pulseed/ui/components/table"
+} from "@traceforge/ui/components/table"
 import { ChevronLeftIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"

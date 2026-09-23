@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto"
 
-import { SCHEMA_VERSION } from "@pulseed/event-schema/constants"
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
+import { SCHEMA_VERSION } from "@traceforge/event-schema/constants"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
 import { sql } from "drizzle-orm"
 
 import { type App, buildApp } from "../app"
@@ -121,7 +121,7 @@ export function batch(projectId: string, events: unknown[], sentAt = Date.now())
   return {
     schemaVersion: SCHEMA_VERSION,
     projectId,
-    sdk: { name: "@pulseed/sdk", version: "0.1.0" },
+    sdk: { name: "@traceforge/sdk", version: "0.1.0" },
     sentAt,
     events,
   }

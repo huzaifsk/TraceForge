@@ -1,15 +1,15 @@
 "use client"
 
-import type { Project } from "@pulseed/event-schema"
+import type { Project } from "@traceforge/event-schema"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
-import { Spinner } from "@pulseed/ui/components/spinner"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pulseed/ui/components/tabs"
+} from "@traceforge/ui/components/card"
+import { Spinner } from "@traceforge/ui/components/spinner"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@traceforge/ui/components/tabs"
 import { CircleCheckIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -20,7 +20,7 @@ import { useEventStream } from "@/components/live/use-event-stream"
 const nextSnippet = (
   dsn: string
 ) => `// instrumentation-client.ts (project root). Runs before your app hydrates.
-import { init } from "@pulseed/sdk"
+import { init } from "@traceforge/sdk"
 
 init({
   dsn: "${dsn}",
@@ -28,7 +28,7 @@ init({
 })`
 
 const reactSnippet = (dsn: string) => `// main.tsx, before createRoot()
-import { init } from "@pulseed/sdk"
+import { init } from "@traceforge/sdk"
 
 init({
   dsn: "${dsn}",
@@ -37,9 +37,9 @@ init({
 
 const scriptSnippet = (
   dsn: string
-) => `<script src="https://cdn.jsdelivr.net/npm/@pulseed/sdk/dist/pulseed.iife.js"></script>
+) => `<script src="https://cdn.jsdelivr.net/npm/@traceforge/sdk/dist/traceforge.iife.js"></script>
 <script>
-  Pulseed.init({ dsn: "${dsn}", environment: "production" })
+  TraceForge.init({ dsn: "${dsn}", environment: "production" })
 </script>`
 
 function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
@@ -78,7 +78,7 @@ export function Onboarding({ project }: { project: Project }) {
       <CardContent>
         <ol className="flex flex-col gap-6">
           <Step n={1} title="Install the SDK">
-            <CodeBlock code="npm install @pulseed/sdk" label="Terminal" />
+            <CodeBlock code="npm install @traceforge/sdk" label="Terminal" />
           </Step>
           <Step n={2} title="Initialize it with your DSN">
             <Tabs defaultValue={project.platform === "javascript" ? "script" : project.platform}>

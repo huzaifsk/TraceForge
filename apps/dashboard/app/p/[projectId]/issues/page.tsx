@@ -1,6 +1,6 @@
-import { issueListSchema } from "@pulseed/event-schema"
-import { Button } from "@pulseed/ui/components/button"
-import { Card } from "@pulseed/ui/components/card"
+import { issueListSchema } from "@traceforge/event-schema"
+import { Button } from "@traceforge/ui/components/button"
+import { Card } from "@traceforge/ui/components/card"
 import {
   Empty,
   EmptyContent,
@@ -8,7 +8,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@pulseed/ui/components/empty"
+} from "@traceforge/ui/components/empty"
 import {
   Table,
   TableBody,
@@ -16,7 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pulseed/ui/components/table"
+} from "@traceforge/ui/components/table"
 import { CircleCheckIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"

@@ -85,8 +85,8 @@ describe("monitoringEventSchema", () => {
 describe("ingestBatchSchema", () => {
   const batch = {
     schemaVersion: SCHEMA_VERSION,
-    projectId: "pw_12345abc",
-    sdk: { name: "@pulseed/sdk", version: "0.1.0" },
+    projectId: "tf_12345abc",
+    sdk: { name: "@traceforge/sdk", version: "0.1.0" },
     sentAt: 1_758_620_000_500,
     events: [{}],
   }

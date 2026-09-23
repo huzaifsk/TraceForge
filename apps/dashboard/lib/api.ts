@@ -45,7 +45,7 @@ export async function apiGet<T extends z.ZodType>(path: string, schema: T): Prom
   try {
     response = await fetch(`${API_URL}${path}`, { headers, cache: "no-store" })
   } catch {
-    throw new ApiError(503, "The Pulseed API is unreachable")
+    throw new ApiError(503, "The TraceForge API is unreachable")
   }
   if (response.status === 401) redirect("/login")
   if (response.status === 404) notFound()

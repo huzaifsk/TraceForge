@@ -1,12 +1,12 @@
-import { endpointListSchema } from "@pulseed/event-schema"
-import { Card } from "@pulseed/ui/components/card"
+import { endpointListSchema } from "@traceforge/event-schema"
+import { Card } from "@traceforge/ui/components/card"
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@pulseed/ui/components/empty"
+} from "@traceforge/ui/components/empty"
 import {
   Table,
   TableBody,
@@ -14,8 +14,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@pulseed/ui/components/table"
-import { cn } from "@pulseed/ui/lib/utils"
+} from "@traceforge/ui/components/table"
+import { cn } from "@traceforge/ui/lib/utils"
 import { NetworkIcon } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"

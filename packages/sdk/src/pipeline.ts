@@ -1,5 +1,5 @@
-import { LIMITS } from "@pulseed/event-schema/constants"
-import type { EventOfType, MonitoringEvent, PageContext } from "@pulseed/event-schema/types"
+import { LIMITS } from "@traceforge/event-schema/constants"
+import type { EventOfType, MonitoringEvent, PageContext } from "@traceforge/event-schema/types"
 
 import { truncate } from "./util"
 

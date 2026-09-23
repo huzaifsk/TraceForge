@@ -1,4 +1,4 @@
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import { ExternalLinkIcon } from "lucide-react"
 import Link from "next/link"
 

@@ -7,8 +7,8 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@pulseed/ui/components/chart"
-import { cn } from "@pulseed/ui/lib/utils"
+} from "@traceforge/ui/components/chart"
+import { cn } from "@traceforge/ui/lib/utils"
 import {
   Area,
   AreaChart,

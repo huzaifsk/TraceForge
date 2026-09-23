@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
-import "@pulseed/ui/globals.css"
-import { cn } from "@pulseed/ui/lib/utils"
+import "@traceforge/ui/globals.css"
+import { cn } from "@traceforge/ui/lib/utils"
 
-import { Toaster } from "@pulseed/ui/components/sonner"
+import { Toaster } from "@traceforge/ui/components/sonner"
 
 import { DemoHeader } from "@/components/demo-header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -13,8 +13,8 @@ const fontSans = Geist({ subsets: ["latin"], variable: "--font-sans" })
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 export const metadata: Metadata = {
-  title: "Pulseed Demo",
-  description: "An intentionally broken app that shows Pulseed catching real failures.",
+  title: "TraceForge Demo",
+  description: "An intentionally broken app that shows TraceForge catching real failures.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

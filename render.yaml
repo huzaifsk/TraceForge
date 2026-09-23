@@ -1,15 +1,15 @@
-# Render Blueprint for the Pulseed API (https://render.com/docs/blueprint-spec).
+# Render Blueprint for the TraceForge API (https://render.com/docs/blueprint-spec).
 # The dashboard and demo deploy to Vercel; the database is Neon. See docs/DEPLOY.md.
 services:
   - type: web
-    name: pulseed-api
+    name: traceforge-api
     runtime: node
     plan: free
     # Install dev dependencies too: the build needs tsdown and TypeScript.
     buildCommand: >-
       npm install -g pnpm@12.5.1 &&
       NODE_ENV=development pnpm install --frozen-lockfile &&
-      pnpm turbo run build --filter=@pulseed/api
+      pnpm turbo run build --filter=@traceforge/api
     startCommand: cd apps/api && node --enable-source-maps dist/server.mjs
     healthCheckPath: /health
     envVars:
@@ -29,7 +29,7 @@ services:
       # Set these three in the Render dashboard:
       - key: DATABASE_URL # Neon pooled connection string, with ?sslmode=require
         sync: false
-      - key: PUBLIC_API_URL # this service's URL, e.g. https://pulseed-api.onrender.com
+      - key: PUBLIC_API_URL # this service's URL, e.g. https://traceforge-api.onrender.com
         sync: false
       - key: DASHBOARD_ORIGINS # your Vercel dashboard URL(s), comma-separated
         sync: false

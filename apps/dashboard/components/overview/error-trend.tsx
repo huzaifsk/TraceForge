@@ -1,6 +1,6 @@
 "use client"
 
-import type { Overview } from "@pulseed/event-schema"
+import type { Overview } from "@traceforge/event-schema"
 
 import { TimeSeriesChart } from "@/components/charts/time-series-chart"
 import { formatCompact } from "@/lib/format"

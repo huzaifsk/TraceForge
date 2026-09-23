@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader } from "@pulseed/ui/components/card"
-import { cn } from "@pulseed/ui/lib/utils"
+import { Card, CardContent, CardDescription, CardHeader } from "@traceforge/ui/components/card"
+import { cn } from "@traceforge/ui/lib/utils"
 import { ArrowDownRightIcon, ArrowUpRightIcon, MinusIcon } from "lucide-react"
 
 import { computeDelta, formatPercent } from "@/lib/format"

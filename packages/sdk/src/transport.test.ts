@@ -1,11 +1,11 @@
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { parseDsn } from "./dsn"
 import { createTransport } from "./transport"
 
-const dsn = parseDsn("https://pk_test@api.test/project/pw_12345abc")!
-const sdk = { name: "@pulseed/sdk", version: "0.0.0" }
+const dsn = parseDsn("https://pk_test@api.test/project/tf_12345abc")!
+const sdk = { name: "@traceforge/sdk", version: "0.0.0" }
 
 const event = (tag = "") =>
   ({
@@ -37,7 +37,7 @@ describe("transport", () => {
     expect(init.credentials).toBe("omit")
     expect(init.keepalive).toBe(true)
     expect(JSON.parse(init.body as string)).toMatchObject({
-      projectId: "pw_12345abc",
+      projectId: "tf_12345abc",
       schemaVersion: 1,
       sdk,
     })

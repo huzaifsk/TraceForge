@@ -1,7 +1,7 @@
 "use client"
 
-import type { Project } from "@pulseed/event-schema"
-import { SidebarInset, SidebarProvider } from "@pulseed/ui/components/sidebar"
+import type { Project } from "@traceforge/event-schema"
+import { SidebarInset, SidebarProvider } from "@traceforge/ui/components/sidebar"
 import { useState } from "react"
 
 import type { SessionUser } from "@/lib/api"

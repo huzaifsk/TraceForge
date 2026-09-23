@@ -9,9 +9,9 @@ import type {
   TimeRange,
   Vitals,
   VitalSummary,
-} from "@pulseed/event-schema"
-import { WEB_VITAL_NAMES, type WebVitalName } from "@pulseed/event-schema/constants"
-import { parseStack, rateWebVital } from "@pulseed/shared"
+} from "@traceforge/event-schema"
+import { WEB_VITAL_NAMES, type WebVitalName } from "@traceforge/event-schema/constants"
+import { parseStack, rateWebVital } from "@traceforge/shared"
 import type postgres from "postgres"
 
 /*

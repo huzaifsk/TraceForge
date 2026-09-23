@@ -11,11 +11,11 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@pulseed/ui/components",
-    "utils": "@pulseed/ui/lib/utils",
-    "hooks": "@pulseed/ui/hooks",
-    "lib": "@pulseed/ui/lib",
-    "ui": "@pulseed/ui/components"
+    "components": "@traceforge/ui/components",
+    "utils": "@traceforge/ui/lib/utils",
+    "hooks": "@traceforge/ui/hooks",
+    "lib": "@traceforge/ui/lib",
+    "ui": "@traceforge/ui/components"
   },
   "rtl": false,
   "menuColor": "default",

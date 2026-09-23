@@ -14,8 +14,8 @@
     "components": "@/components",
     "hooks": "@/hooks",
     "lib": "@/lib",
-    "utils": "@pulseed/ui/lib/utils",
-    "ui": "@pulseed/ui/components"
+    "utils": "@traceforge/ui/lib/utils",
+    "ui": "@traceforge/ui/components"
   },
   "rtl": false,
   "menuColor": "default",

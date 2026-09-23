@@ -1,7 +1,7 @@
 "use client"
 
-import { Toaster } from "@pulseed/ui/components/sonner"
-import { TooltipProvider } from "@pulseed/ui/components/tooltip"
+import { Toaster } from "@traceforge/ui/components/sonner"
+import { TooltipProvider } from "@traceforge/ui/components/tooltip"
 
 import { ThemeProvider } from "@/components/theme-provider"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import { CheckIcon, CopyIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"

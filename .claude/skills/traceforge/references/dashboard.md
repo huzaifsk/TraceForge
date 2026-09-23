@@ -1,6 +1,6 @@
 # Dashboard — `apps/dashboard` (and the UI of `apps/demo`)
 
-The dashboard is what people judge Pulseed by. The target feel is **calm, dense and
+The dashboard is what people judge TraceForge by. The target feel is **calm, dense and
 precise**: the craft of Linear, Vercel and Sentry, not a template. Every pixel is intentional.
 
 Before building UI, load the **`shadcn`** skill (component rules) and the
@@ -25,7 +25,7 @@ Before building UI, load the **`shadcn`** skill (component rules) and the
 
 - Next.js 16 App Router, React 19, Tailwind v4, shadcn/ui **Base UI** (`base-nova`), lucide icons, Recharts through shadcn `chart`.
 - **Read `node_modules/next/dist/docs/` before using a Next API.** Next 16 renamed `middleware` to `proxy`, and `params`/`searchParams` are Promises.
-- Components come from `@pulseed/ui/components/*` (added with the shadcn CLI run from
+- Components come from `@traceforge/ui/components/*` (added with the shadcn CLI run from
   `apps/dashboard`). App-specific composites live in `apps/dashboard/components/`.
 - Server Components by default. `"use client"` only at the leaves that need interactivity.
 - Base UI composition uses the `render` prop (`<Button render={<Link href="/x" />} nativeButton={false}>`), **never `asChild`**.
@@ -171,7 +171,7 @@ A pause/resume toggle holds incoming rows and shows a "N new events" pill. There
 automatic reconnect using backoff.
 
 ### Onboarding (a new project)
-Step 1: name and platform (React, Next.js, JavaScript). Step 2: install (`npm i @pulseed/sdk`)
+Step 1: name and platform (React, Next.js, JavaScript). Step 2: install (`npm i @traceforge/sdk`)
 plus the init snippet with the real DSN, in a code block with a copy button (Next.js shows the `instrumentation-client.ts` variant).
 Step 3: "Waiting for your first event…", driven by the SSE stream, which flips to a success state with a link to the event.
 
@@ -247,4 +247,4 @@ Apply the `mobile-native` skill checks for phone widths.
   stack trace (third-party collapse, text rendering of hostile input such as `<img onerror>`), and filter URL sync.
 - Playwright: sign up → create a project → ingest via the API → see the issue → resolve it. The live stream receives
   an event. Axe on every page. Screenshots in light and dark at 1440 and 390.
-- The dashboard runs the Pulseed SDK on itself in production (dogfooding).
+- The dashboard runs the TraceForge SDK on itself in production (dogfooding).

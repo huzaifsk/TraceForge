@@ -1,6 +1,6 @@
 import { gzipSync } from "node:zlib"
 
-import { LIMITS } from "@pulseed/event-schema/constants"
+import { LIMITS } from "@traceforge/event-schema/constants"
 import { afterAll, beforeAll, beforeEach, describe, expect, inject, it } from "vitest"
 
 import type { App } from "../app"
@@ -67,7 +67,7 @@ describe.skipIf(!inject("dbAvailable"))("POST /api/v1/events", () => {
     const response = await app.inject({
       method: "POST",
       url: "/api/v1/events",
-      headers: { "content-type": "application/json", "x-pulseed-key": project.publicKey },
+      headers: { "content-type": "application/json", "x-traceforge-key": project.publicKey },
       payload: batch(project.id, [errorEvent()]),
     })
     expect(response.statusCode).toBe(202)
@@ -163,7 +163,7 @@ describe.skipIf(!inject("dbAvailable"))("POST /api/v1/events", () => {
 
   it.each([
     ["not JSON", "{nope"],
-    ["an invalid envelope", JSON.stringify({ projectId: "pw_x", events: [] })],
+    ["an invalid envelope", JSON.stringify({ projectId: "tf_x", events: [] })],
     ["an empty body", ""],
   ])("returns 400 for %s", async (_label, body) => {
     const response = await send(body)
@@ -219,7 +219,7 @@ describe.skipIf(!inject("dbAvailable"))("POST /api/v1/events", () => {
       headers: {
         origin: "https://any-customer.example.com",
         "access-control-request-method": "POST",
-        "access-control-request-headers": "content-type,x-pulseed-key",
+        "access-control-request-headers": "content-type,x-traceforge-key",
       },
     })
     expect(preflight.headers["access-control-allow-origin"]).toBe(

@@ -23,7 +23,7 @@ describe.skipIf(!inject("dbAvailable"))("auth", () => {
     })
 
     expect(response.statusCode).toBe(200)
-    const cookie = response.cookies.find((c) => c.name === "pulseed.session_token")
+    const cookie = response.cookies.find((c) => c.name === "traceforge.session_token")
     expect(cookie?.httpOnly).toBe(true)
     expect(cookie?.sameSite?.toLowerCase()).toBe("lax")
     expect(response.body).not.toContain("correct-horse-battery")

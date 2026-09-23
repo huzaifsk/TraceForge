@@ -1,7 +1,7 @@
 {
-  "name": "@pulseed/shared",
+  "name": "@traceforge/shared",
   "version": "0.1.0",
-  "description": "Isomorphic, dependency-free helpers shared by the Pulseed SDK, API and dashboard.",
+  "description": "Isomorphic, dependency-free helpers shared by the TraceForge SDK, API and dashboard.",
   "type": "module",
   "license": "MIT",
   "sideEffects": false,
@@ -24,11 +24,11 @@
     "clean": "rm -rf dist .turbo coverage"
   },
   "dependencies": {
-    "@pulseed/event-schema": "workspace:*"
+    "@traceforge/event-schema": "workspace:*"
   },
   "devDependencies": {
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "eslint": "catalog:",
     "tsdown": "^0.23.0",
     "typescript": "catalog:",

@@ -1,14 +1,14 @@
 "use client"
 
-import type { MonitoringEvent } from "@pulseed/sdk"
-import { Badge } from "@pulseed/ui/components/badge"
+import type { MonitoringEvent } from "@traceforge/sdk"
+import { Badge } from "@traceforge/ui/components/badge"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 import { useEffect, useState } from "react"
 
 function summarize(event: MonitoringEvent): string {
@@ -36,8 +36,8 @@ export function SessionLog() {
       const event = (e as CustomEvent<MonitoringEvent>).detail
       setEvents((current) => [event, ...current].slice(0, 50))
     }
-    window.addEventListener("pulseed:captured", onCaptured)
-    return () => window.removeEventListener("pulseed:captured", onCaptured)
+    window.addEventListener("traceforge:captured", onCaptured)
+    return () => window.removeEventListener("traceforge:captured", onCaptured)
   }, [])
 
   return (

@@ -22,10 +22,10 @@ export default defineConfig([
     deps,
   },
   {
-    // <script src="https://cdn.jsdelivr.net/npm/@pulseed/sdk"> exposes window.Pulseed
-    entry: { pulseed: "src/index.ts" },
+    // <script src="https://cdn.jsdelivr.net/npm/@traceforge/sdk"> exposes window.TraceForge
+    entry: { traceforge: "src/index.ts" },
     format: ["iife"],
-    globalName: "Pulseed",
+    globalName: "TraceForge",
     platform: "browser",
     target: "es2020",
     minify: true,

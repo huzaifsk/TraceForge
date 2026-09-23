@@ -1,4 +1,4 @@
-import { cn } from "@pulseed/ui/lib/utils"
+import { cn } from "@traceforge/ui/lib/utils"
 
 /**
  * Tiny trend line (no axes). Decorative: the number beside it carries the

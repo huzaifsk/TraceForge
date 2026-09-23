@@ -1,7 +1,7 @@
 "use client"
 
-import { PLATFORMS, type Platform, projectSchema } from "@pulseed/event-schema"
-import { Button } from "@pulseed/ui/components/button"
+import { PLATFORMS, type Platform, projectSchema } from "@traceforge/event-schema"
+import { Button } from "@traceforge/ui/components/button"
 import {
   Card,
   CardContent,
@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 import {
   Field,
   FieldError,
@@ -17,10 +17,10 @@ import {
   FieldLabel,
   FieldSet,
   FieldLegend,
-} from "@pulseed/ui/components/field"
-import { Input } from "@pulseed/ui/components/input"
-import { Spinner } from "@pulseed/ui/components/spinner"
-import { ToggleGroup, ToggleGroupItem } from "@pulseed/ui/components/toggle-group"
+} from "@traceforge/ui/components/field"
+import { Input } from "@traceforge/ui/components/input"
+import { Spinner } from "@traceforge/ui/components/spinner"
+import { ToggleGroup, ToggleGroupItem } from "@traceforge/ui/components/toggle-group"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -58,7 +58,7 @@ export function NewProjectForm() {
       router.push(`/p/${project.id}/overview`)
       router.refresh()
     } catch {
-      setError("Can't reach Pulseed. Check your connection and try again.")
+      setError("Can't reach TraceForge. Check your connection and try again.")
     } finally {
       setPending(false)
     }

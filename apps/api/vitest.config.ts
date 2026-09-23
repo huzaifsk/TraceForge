@@ -14,7 +14,7 @@ export default defineConfig({
     hookTimeout: 30_000,
     env: {
       NODE_ENV: "test",
-      DATABASE_URL: "postgres://pulseed:pulseed@localhost:5432/pulseed_test",
+      DATABASE_URL: "postgres://traceforge:traceforge@localhost:5432/traceforge_test",
       PUBLIC_API_URL: "http://localhost:4000",
       BETTER_AUTH_SECRET: "test-secret-test-secret-test-secret-000",
       DASHBOARD_ORIGINS: "http://localhost:3000",

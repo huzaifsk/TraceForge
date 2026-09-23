@@ -1,4 +1,4 @@
-import { Skeleton } from "@pulseed/ui/components/skeleton"
+import { Skeleton } from "@traceforge/ui/components/skeleton"
 
 import { ChartCardSkeleton, TileSkeleton } from "@/components/skeletons"
 

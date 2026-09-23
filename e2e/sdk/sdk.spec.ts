@@ -4,7 +4,7 @@ import { dirname, join } from "node:path"
 import { gunzipSync } from "node:zlib"
 
 import { expect, type Page, test } from "@playwright/test"
-import type { IngestBatch, MonitoringEvent } from "@pulseed/event-schema/types"
+import type { IngestBatch, MonitoringEvent } from "@traceforge/event-schema/types"
 
 /*
  * Runs the real CDN build of the SDK in Chromium. Both the "customer app"
@@ -15,16 +15,16 @@ import type { IngestBatch, MonitoringEvent } from "@pulseed/event-schema/types"
 
 const require = createRequire(import.meta.url)
 const SDK_BUNDLE = readFileSync(
-  join(dirname(require.resolve("@pulseed/sdk/package.json")), "dist/pulseed.iife.js"),
+  join(dirname(require.resolve("@traceforge/sdk/package.json")), "dist/traceforge.iife.js"),
   "utf8"
 )
-const DSN = "https://pk_e2e@api.test/project/pw_e2etest01"
+const DSN = "https://pk_e2e@api.test/project/tf_e2etest01"
 
 const APP_HTML = `<!doctype html>
 <html><head><title>shop</title>
 <script src="/sdk.js"></script>
 <script>
-  window.pw = Pulseed.init({ dsn: "${DSN}", environment: "staging", release: "e2e", flushIntervalMs: 200 })
+  window.pw = TraceForge.init({ dsn: "${DSN}", environment: "staging", release: "e2e", flushIntervalMs: 200 })
 </script>
 </head>
 <body><h1>Shop</h1><p>Hello</p></body></html>`

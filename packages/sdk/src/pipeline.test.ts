@@ -1,5 +1,5 @@
-import { LIMITS } from "@pulseed/event-schema/constants"
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
+import { LIMITS } from "@traceforge/event-schema/constants"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
 import { describe, expect, it } from "vitest"
 
 import { Deduper, limitTags, prepareEvent, redactSecrets } from "./pipeline"

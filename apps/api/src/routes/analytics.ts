@@ -10,7 +10,7 @@ import {
   updateIssueSchema,
   vitalsQuerySchema,
   vitalsSchema,
-} from "@pulseed/event-schema"
+} from "@traceforge/event-schema"
 import { and, eq } from "drizzle-orm"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod"

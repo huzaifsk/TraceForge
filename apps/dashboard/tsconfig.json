@@ -1,9 +1,9 @@
 {
-  "extends": "@pulseed/typescript-config/nextjs.json",
+  "extends": "@traceforge/typescript-config/nextjs.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"],
-      "@pulseed/ui/*": ["../../packages/ui/src/*"]
+      "@traceforge/ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": [

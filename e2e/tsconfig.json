@@ -1,5 +1,5 @@
 {
-  "extends": "@pulseed/typescript-config/base.json",
+  "extends": "@traceforge/typescript-config/base.json",
   "compilerOptions": {
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["node"]

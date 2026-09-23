@@ -1,6 +1,6 @@
-import { HTTP_METHODS, type HttpMethod, LIMITS } from "@pulseed/event-schema/constants"
-import type { ApiErrorKind } from "@pulseed/event-schema/types"
-import { normalizeEndpoint, redactUrl } from "@pulseed/shared"
+import { HTTP_METHODS, type HttpMethod, LIMITS } from "@traceforge/event-schema/constants"
+import type { ApiErrorKind } from "@traceforge/event-schema/types"
+import { normalizeEndpoint, redactUrl } from "@traceforge/shared"
 
 import type { Hub } from "../hub"
 import { matches, truncate } from "../util"
@@ -129,7 +129,7 @@ export function fetchIntegration(nativeFetch: typeof fetch): (hub: Hub) => () =>
   }
 }
 
-const XHR_STATE = Symbol("pulseed.xhr")
+const XHR_STATE = Symbol("traceforge.xhr")
 
 interface XhrState {
   method: string

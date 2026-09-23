@@ -1,4 +1,4 @@
-import type { VitalSummary } from "@pulseed/event-schema"
+import type { VitalSummary } from "@traceforge/event-schema"
 import {
   Card,
   CardAction,
@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@pulseed/ui/components/card"
+} from "@traceforge/ui/components/card"
 
 import { formatCount, formatVital } from "@/lib/format"
 import { goodThreshold, VITAL_INFO } from "@/lib/vitals"

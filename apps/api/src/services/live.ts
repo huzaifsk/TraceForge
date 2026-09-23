@@ -1,5 +1,5 @@
-import type { LiveEvent } from "@pulseed/event-schema"
-import type { MonitoringEvent } from "@pulseed/event-schema/types"
+import type { LiveEvent } from "@traceforge/event-schema"
+import type { MonitoringEvent } from "@traceforge/event-schema/types"
 
 import type { EnrichedEvent } from "./ingest"
 

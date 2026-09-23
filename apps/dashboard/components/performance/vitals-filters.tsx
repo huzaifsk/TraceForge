@@ -1,6 +1,6 @@
 "use client"
 
-import { DEVICE_TYPES } from "@pulseed/event-schema/constants"
+import { DEVICE_TYPES } from "@traceforge/event-schema/constants"
 import {
   Select,
   SelectContent,
@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@pulseed/ui/components/select"
+} from "@traceforge/ui/components/select"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useTransition } from "react"
 

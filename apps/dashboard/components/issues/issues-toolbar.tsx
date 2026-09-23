@@ -1,7 +1,7 @@
 "use client"
 
-import { ISSUE_STATUSES } from "@pulseed/event-schema"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@pulseed/ui/components/input-group"
+import { ISSUE_STATUSES } from "@traceforge/event-schema"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@traceforge/ui/components/input-group"
 import {
   Select,
   SelectContent,
@@ -9,9 +9,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@pulseed/ui/components/select"
-import { Spinner } from "@pulseed/ui/components/spinner"
-import { ToggleGroup, ToggleGroupItem } from "@pulseed/ui/components/toggle-group"
+} from "@traceforge/ui/components/select"
+import { Spinner } from "@traceforge/ui/components/spinner"
+import { ToggleGroup, ToggleGroupItem } from "@traceforge/ui/components/toggle-group"
 import { SearchIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState, useTransition } from "react"

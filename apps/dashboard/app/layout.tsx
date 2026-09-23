@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
-import "@pulseed/ui/globals.css"
-import { cn } from "@pulseed/ui/lib/utils"
+import "@traceforge/ui/globals.css"
+import { cn } from "@traceforge/ui/lib/utils"
 
 import { Providers } from "@/components/providers"
 
@@ -10,7 +10,7 @@ const fontSans = Geist({ subsets: ["latin"], variable: "--font-sans" })
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 export const metadata: Metadata = {
-  title: { default: "Pulseed", template: "%s · Pulseed" },
+  title: { default: "TraceForge", template: "%s · TraceForge" },
   description:
     "Open-source frontend observability — JavaScript errors, API failures and Web Vitals from real users.",
 }

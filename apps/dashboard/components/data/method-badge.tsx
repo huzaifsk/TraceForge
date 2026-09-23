@@ -1,4 +1,4 @@
-import { Badge } from "@pulseed/ui/components/badge"
+import { Badge } from "@traceforge/ui/components/badge"
 
 export function MethodBadge({ method }: { method: string }) {
   return (

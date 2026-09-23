@@ -1,15 +1,15 @@
 import { type CaptureContext, type Client, createClient } from "./client"
-import { type PulseedOptions, type ResolvedOptions, resolveOptions } from "./options"
+import { type TraceForgeOptions, type ResolvedOptions, resolveOptions } from "./options"
 
 export type { CaptureContext } from "./client"
-export type { IntegrationOptions, PrivacyOptions, PulseedOptions } from "./options"
-export type { Environment, EventType } from "@pulseed/event-schema/constants"
-export type * from "@pulseed/event-schema/types"
+export type { IntegrationOptions, PrivacyOptions, TraceForgeOptions } from "./options"
+export type { Environment, EventType } from "@traceforge/event-schema/constants"
+export type * from "@traceforge/event-schema/types"
 
-export const SDK_NAME = "@pulseed/sdk"
+export const SDK_NAME = "@traceforge/sdk"
 export const SDK_VERSION: string = __SDK_VERSION__
 
-export interface PulseedClient {
+export interface TraceForgeClient {
   /** True when the SDK is configured and sampling this session. */
   readonly active: boolean
   /** Resolved configuration, or null when init failed. */
@@ -24,7 +24,7 @@ export interface PulseedClient {
   close(): Promise<void>
 }
 
-const noop: PulseedClient = {
+const noop: TraceForgeClient = {
   active: false,
   options: null,
   captureException: () => {},
@@ -34,9 +34,9 @@ const noop: PulseedClient = {
 }
 
 let client: Client | null = null
-let publicClient: PulseedClient | null = null
+let publicClient: TraceForgeClient | null = null
 
-function wrap(inner: Client): PulseedClient {
+function wrap(inner: Client): TraceForgeClient {
   return {
     get active() {
       return inner.active
@@ -56,23 +56,23 @@ function wrap(inner: Client): PulseedClient {
 }
 
 /**
- * Initialize Pulseed. Call once, as early as possible in your app — in
+ * Initialize TraceForge. Call once, as early as possible in your app — in
  * Next.js, from `instrumentation-client.ts`.
  *
  * The SDK never throws into the host application: invalid configuration logs
  * a single warning and returns an inactive client. On the server it is a no-op.
  */
-export function init(options: PulseedOptions): PulseedClient {
+export function init(options: TraceForgeOptions): TraceForgeClient {
   if (typeof window === "undefined" || typeof document === "undefined") return noop
   if (publicClient) {
-    if (publicClient.options?.debug) console.warn("[Pulseed] init() called twice; ignoring.")
+    if (publicClient.options?.debug) console.warn("[TraceForge] init() called twice; ignoring.")
     return publicClient
   }
 
   try {
     const result = resolveOptions(options)
     if (!result.ok) {
-      console.warn(`[Pulseed] ${result.error} Monitoring is disabled.`)
+      console.warn(`[TraceForge] ${result.error} Monitoring is disabled.`)
       return noop
     }
 
@@ -93,13 +93,13 @@ export function init(options: PulseedOptions): PulseedClient {
     publicClient = wrap(client)
     return publicClient
   } catch (error) {
-    console.warn("[Pulseed] Failed to initialize; monitoring is disabled.", error)
+    console.warn("[TraceForge] Failed to initialize; monitoring is disabled.", error)
     return noop
   }
 }
 
 /** The active client, or null before `init` (or after `close`). */
-export function getClient(): PulseedClient | null {
+export function getClient(): TraceForgeClient | null {
   return publicClient
 }
 

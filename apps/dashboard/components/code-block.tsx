@@ -1,4 +1,4 @@
-import { cn } from "@pulseed/ui/lib/utils"
+import { cn } from "@traceforge/ui/lib/utils"
 
 import { CopyButton } from "./copy-button"
 

@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardHeader, CardTitle } from "@pulseed/ui/components/card"
+import { Card, CardDescription, CardHeader, CardTitle } from "@traceforge/ui/components/card"
 import {
   BugIcon,
   GaugeIcon,
@@ -55,7 +55,7 @@ export function Features() {
           What failed, where, how often, and who it hit
         </h2>
         <p className="text-muted-foreground">
-          Frontend bugs rarely reproduce on your machine. Pulseed shows you what real users ran
+          Frontend bugs rarely reproduce on your machine. TraceForge shows you what real users ran
           into, grouped so you can fix the ones that matter first.
         </p>
       </div>

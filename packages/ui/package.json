@@ -1,5 +1,5 @@
 {
-  "name": "@pulseed/ui",
+  "name": "@traceforge/ui",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -36,8 +36,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@pulseed/eslint-config": "workspace:*",
-    "@pulseed/typescript-config": "workspace:*",
+    "@traceforge/eslint-config": "workspace:*",
+    "@traceforge/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

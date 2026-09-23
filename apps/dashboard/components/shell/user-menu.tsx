@@ -1,6 +1,6 @@
 "use client"
 
-import { Avatar, AvatarFallback } from "@pulseed/ui/components/avatar"
+import { Avatar, AvatarFallback } from "@traceforge/ui/components/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +11,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@pulseed/ui/components/dropdown-menu"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@pulseed/ui/components/sidebar"
+} from "@traceforge/ui/components/dropdown-menu"
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@traceforge/ui/components/sidebar"
 import { ChevronsUpDownIcon, LogOutIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"

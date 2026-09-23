@@ -1,5 +1,5 @@
-import type { WebVitalName } from "@pulseed/event-schema/constants"
-import { WEB_VITAL_THRESHOLDS } from "@pulseed/shared"
+import type { WebVitalName } from "@traceforge/event-schema/constants"
+import { WEB_VITAL_THRESHOLDS } from "@traceforge/shared"
 
 import { formatVital } from "./format"
 

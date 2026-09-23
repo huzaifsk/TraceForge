@@ -1,4 +1,4 @@
-import type { ErrorMechanism, ErrorPayload } from "@pulseed/event-schema/types"
+import type { ErrorMechanism, ErrorPayload } from "@traceforge/event-schema/types"
 
 import type { Integration } from "../hub"
 import { describeValue } from "../util"

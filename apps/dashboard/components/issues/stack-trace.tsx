@@ -1,8 +1,8 @@
 "use client"
 
-import type { IssueFrame } from "@pulseed/event-schema"
-import { Button } from "@pulseed/ui/components/button"
-import { cn } from "@pulseed/ui/lib/utils"
+import type { IssueFrame } from "@traceforge/event-schema"
+import { Button } from "@traceforge/ui/components/button"
+import { cn } from "@traceforge/ui/lib/utils"
 import { ChevronRightIcon } from "lucide-react"
 import { useState } from "react"
 

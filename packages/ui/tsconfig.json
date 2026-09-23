@@ -1,9 +1,9 @@
 {
-  "extends": "@pulseed/typescript-config/react-library.json",
+  "extends": "@traceforge/typescript-config/react-library.json",
   "compilerOptions": {
     "types": ["node"],
     "paths": {
-      "@pulseed/ui/*": ["./src/*"]
+      "@traceforge/ui/*": ["./src/*"]
     }
   },
   "include": ["src", "*.mjs", "*.js"],

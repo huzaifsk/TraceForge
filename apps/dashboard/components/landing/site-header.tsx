@@ -1,9 +1,9 @@
-import { Button } from "@pulseed/ui/components/button"
+import { Button } from "@traceforge/ui/components/button"
 import Link from "next/link"
 
 import { Logo } from "@/components/logo"
 
-export const GITHUB_URL = "https://github.com/huzaifsk/Pulseed"
+export const GITHUB_URL = "https://github.com/huzaifsk/TraceForge"
 
 export function SiteHeader() {
   return (
@@ -11,7 +11,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 lg:px-6">
         <Link
           href="/"
-          aria-label="Pulseed home"
+          aria-label="TraceForge home"
           className="rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <Logo />

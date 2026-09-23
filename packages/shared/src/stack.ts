@@ -1,5 +1,5 @@
-import type { StackFrame } from "@pulseed/event-schema/types"
-import { LIMITS } from "@pulseed/event-schema/constants"
+import type { StackFrame } from "@traceforge/event-schema/types"
+import { LIMITS } from "@traceforge/event-schema/constants"
 
 // V8 (Chrome, Edge, Node):  "    at fn (https://x/app.js:10:5)"  or  "    at https://x/app.js:10:5"
 const V8_FRAME = /^\s*at (?:(.+?) \()?(.+?):(\d+):(\d+)\)?\s*$/

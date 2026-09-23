@@ -1,4 +1,4 @@
-# SDK — `@pulseed/sdk`
+# SDK — `@traceforge/sdk`
 
 The SDK is the hardest part to get right and the part most visible to other
 engineers. It runs inside **someone else's production app**, so it has to be
@@ -25,10 +25,10 @@ invisible: tiny, fast, private, and unable to break its host.
 Keep the surface **small and stable**. Every export is a semver promise.
 
 ```ts
-import { init, captureException, setTag, flush, close, getClient } from "@pulseed/sdk"
+import { init, captureException, setTag, flush, close, getClient } from "@traceforge/sdk"
 
 const client = init({
-  dsn: "https://pk_live_xxx@pulseed.example.com/project/pw_12345abc",
+  dsn: "https://pk_live_xxx@traceforge.example.com/project/tf_12345abc",
   environment: "production",          // "development" | "staging" | "production"
   release: process.env.NEXT_PUBLIC_COMMIT_SHA,
   sampleRate: 1,                      // session sampling, 0–1
@@ -56,7 +56,7 @@ Rules:
 ```text
 packages/sdk/src/                 (✅ = built in M2)
   index.ts              public API: init, captureException, setTag, flush, close, getClient   ✅
-  options.ts            PulseedOptions → ResolvedOptions (defaults, clamping)              ✅
+  options.ts            TraceForgeOptions → ResolvedOptions (defaults, clamping)              ✅
   dsn.ts                DSN parsing                                                            ✅
   client.ts             wires integrations → pipeline → queue → transport; retry; lifecycle   ✅
   hub.ts                the small interface integrations see                                   ✅
@@ -73,7 +73,7 @@ packages/sdk/src/                 (✅ = built in M2)
   integrations/performance.ts  Navigation Timing + long-task count                              ✅
   offline.ts            IndexedDB store (Phase 2; M2 holds offline batches in memory)
   worker/               Phase 2
-  react/  next/         Phase 2 entries: @pulseed/sdk/react, @pulseed/sdk/next
+  react/  next/         Phase 2 entries: @traceforge/sdk/react, @traceforge/sdk/next
 ```
 
 One integration per file, each exporting a `setup(client): Teardown` function.
@@ -115,9 +115,9 @@ Do not ship a UA-parsing library; it costs several KB. The device type is
 and `navigator.connection?.effectiveType`. Never use IP-based geolocation in the SDK.
 The server may derive a coarse country from `cf-ipcountry` or a similar header.
 
-**Session.** `sessionId` is a random id kept in `sessionStorage` under `pulseed:sid`,
+**Session.** `sessionId` is a random id kept in `sessionStorage` under `traceforge:sid`,
 so it survives reloads and is per-tab. `anonymousId` is a random id in `localStorage`
-under `pulseed:aid`, **only** when `privacy.captureUserContext` is true. All storage
+under `traceforge:aid`, **only** when `privacy.captureUserContext` is true. All storage
 access goes through try/catch: Safari private mode and sandboxed iframes throw.
 
 ## 5. Integrations
@@ -218,12 +218,12 @@ Order matters. Cheap filters come first.
 
 ## 8. Offline buffer (Phase 2)
 
-- IndexedDB database `pulseed`, object store `events`, keyed by event id, with an
+- IndexedDB database `traceforge`, object store `events`, keyed by event id, with an
   index on `timestamp`. Minimal promise wrapper; no `idb` dependency.
 - Cap at `SDK_DEFAULTS.maxOfflineEvents` (1,000) and evict the oldest first.
 - On `online` (and at init), replay in batches through the normal transport. Delete
   only after a 2xx. Server idempotency (ADR 13) makes a replay that duplicates in-flight events harmless.
-- Multiple tabs: use the Web Locks API (`navigator.locks.request("pulseed-replay")`)
+- Multiple tabs: use the Web Locks API (`navigator.locks.request("traceforge-replay")`)
   so only one tab replays. Fall back to best-effort when locks are unavailable.
 - Every IDB call is wrapped: private mode, quota errors and a blocked `onversionchange` must degrade to memory-only.
 
@@ -247,8 +247,8 @@ Add these as extra tsdown entries and `exports` subpaths. `react` becomes an
 **optional peer dependency**, and the core entry must never import React.
 
 ```tsx
-// @pulseed/sdk/react
-<PulseedErrorBoundary fallback={<Crash />}>…</PulseedErrorBoundary>
+// @traceforge/sdk/react
+<TraceForgeErrorBoundary fallback={<Crash />}>…</TraceForgeErrorBoundary>
 // captures error + componentStack, mechanism "error-boundary", handled true
 
 // React 19 root options
@@ -257,9 +257,9 @@ createRoot(el, { onUncaughtError: reactErrorHandler(), onCaughtError: reactError
 
 ```ts
 // Next.js: instrumentation-client.ts (runs before hydration)
-import { init } from "@pulseed/sdk"
-init({ dsn: process.env.NEXT_PUBLIC_PULSEED_DSN!, environment: "production" })
-export { onRouterTransitionStart } from "@pulseed/sdk/next"
+import { init } from "@traceforge/sdk"
+init({ dsn: process.env.NEXT_PUBLIC_TRACEFORGE_DSN!, environment: "production" })
+export { onRouterTransitionStart } from "@traceforge/sdk/next"
 ```
 
 Read `apps/dashboard/node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/instrumentation-client.md`

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@pulseed/ui/components/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@traceforge/ui/components/card"
 
 import { formatCount, formatPercent } from "@/lib/format"
 

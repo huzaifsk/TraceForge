@@ -1,4 +1,4 @@
-import type { WebVitalName } from "@pulseed/event-schema/constants"
+import type { WebVitalName } from "@traceforge/event-schema/constants"
 
 const integer = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 })
 const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })

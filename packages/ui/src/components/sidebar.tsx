@@ -6,19 +6,19 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-import { useIsMobile } from "@pulseed/ui/hooks/use-mobile"
-import { Button } from "@pulseed/ui/components/button"
-import { Input } from "@pulseed/ui/components/input"
-import { Separator } from "@pulseed/ui/components/separator"
+import { useIsMobile } from "@traceforge/ui/hooks/use-mobile"
+import { Button } from "@traceforge/ui/components/button"
+import { Input } from "@traceforge/ui/components/input"
+import { Separator } from "@traceforge/ui/components/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@pulseed/ui/components/sheet"
-import { Skeleton } from "@pulseed/ui/components/skeleton"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@pulseed/ui/components/tooltip"
+} from "@traceforge/ui/components/sheet"
+import { Skeleton } from "@traceforge/ui/components/skeleton"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@traceforge/ui/components/tooltip"
 import { PanelLeftIcon } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"

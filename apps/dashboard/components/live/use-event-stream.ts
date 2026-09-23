@@ -1,6 +1,6 @@
 "use client"
 
-import { type LiveEvent, liveEventSchema } from "@pulseed/event-schema"
+import { type LiveEvent, liveEventSchema } from "@traceforge/event-schema"
 import { useEffect, useRef, useState } from "react"
 
 export type StreamStatus = "connecting" | "open" | "reconnecting" | "paused"

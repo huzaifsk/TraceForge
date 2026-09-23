@@ -1,17 +1,17 @@
 "use client"
 
-import type { LiveEvent } from "@pulseed/event-schema"
-import { Badge } from "@pulseed/ui/components/badge"
-import { Button } from "@pulseed/ui/components/button"
-import { Card } from "@pulseed/ui/components/card"
+import type { LiveEvent } from "@traceforge/event-schema"
+import { Badge } from "@traceforge/ui/components/badge"
+import { Button } from "@traceforge/ui/components/button"
+import { Card } from "@traceforge/ui/components/card"
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@pulseed/ui/components/empty"
-import { cn } from "@pulseed/ui/lib/utils"
+} from "@traceforge/ui/components/empty"
+import { cn } from "@traceforge/ui/lib/utils"
 import { PauseIcon, PlayIcon, RadioIcon } from "lucide-react"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"

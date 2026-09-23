@@ -2,22 +2,22 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: pulseed-postgres
+    container_name: traceforge-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: pulseed
-      POSTGRES_PASSWORD: pulseed
-      POSTGRES_DB: pulseed
+      POSTGRES_USER: traceforge
+      POSTGRES_PASSWORD: traceforge
+      POSTGRES_DB: traceforge
     ports:
       - "5432:5432"
     volumes:
-      - pulseed-pgdata:/var/lib/postgresql/data
+      - traceforge-pgdata:/var/lib/postgresql/data
       - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pulseed -d pulseed"]
+      test: ["CMD-SHELL", "pg_isready -U traceforge -d traceforge"]
       interval: 5s
       timeout: 3s
       retries: 10
 
 volumes:
-  pulseed-pgdata:
+  traceforge-pgdata:

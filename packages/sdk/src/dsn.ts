@@ -1,18 +1,18 @@
-import { INGEST_PATH } from "@pulseed/event-schema/constants"
+import { INGEST_PATH } from "@traceforge/event-schema/constants"
 
 export interface ParsedDsn {
-  /** Absolute ingestion URL, e.g. https://pulseed.example.com/api/v1/events */
+  /** Absolute ingestion URL, e.g. https://traceforge.example.com/api/v1/events */
   ingestUrl: string
   projectId: string
   /** Public, rotatable ingestion key. Safe to ship in browser bundles. */
   publicKey: string
 }
 
-const PROJECT_ID = /^pw_[a-z0-9]{8,32}$/
+const PROJECT_ID = /^tf_[a-z0-9]{8,32}$/
 
 /**
  * Parse a project DSN of the form
- *   https://<publicKey>@pulseed.example.com/project/<projectId>
+ *   https://<publicKey>@traceforge.example.com/project/<projectId>
  *
  * The DSN only grants write access to one project's ingestion endpoint — it
  * never carries dashboard credentials.

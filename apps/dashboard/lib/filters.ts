@@ -1,4 +1,9 @@
-import { ENVIRONMENTS, type Environment, TIME_RANGES, type TimeRange } from "@pulseed/event-schema"
+import {
+  ENVIRONMENTS,
+  type Environment,
+  TIME_RANGES,
+  type TimeRange,
+} from "@traceforge/event-schema"
 
 export type SearchParams = Record<string, string | string[] | undefined>
 

@@ -1,4 +1,4 @@
-import { LIMITS } from "@pulseed/event-schema/constants"
+import { LIMITS } from "@traceforge/event-schema/constants"
 import { describe, expect, it } from "vitest"
 
 import { apiErrorEvent, errorEvent } from "../test/helpers"

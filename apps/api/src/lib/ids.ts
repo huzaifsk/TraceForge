@@ -20,8 +20,8 @@ function randomString(alphabet: string, length: number): string {
   return out
 }
 
-/** Public project id, e.g. `pw_k3j9x0q2m7ab`. Matches `projectIdSchema`. */
-export const generateProjectId = () => `pw_${randomString(BASE36, 12)}`
+/** Public project id, e.g. `tf_k3j9x0q2m7ab`. Matches `projectIdSchema`. */
+export const generateProjectId = () => `tf_${randomString(BASE36, 12)}`
 
 /** Public ingestion key (~190 bits of entropy), e.g. `pk_Xy3…`. */
 export const generatePublicKey = () => `pk_${randomString(BASE62, 32)}`

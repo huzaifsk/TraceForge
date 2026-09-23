@@ -1,6 +1,6 @@
-# Contributing to Pulseed
+# Contributing to TraceForge
 
-Thanks for helping! Pulseed aims for a high bar of quality. These guidelines keep it that way.
+Thanks for helping! TraceForge aims for a high bar of quality. These guidelines keep it that way.
 
 ## Getting set up
 
@@ -13,7 +13,7 @@ pnpm dev
 
 ## Before you open a PR
 
-1. Read the engineering handbook: [`.claude/skills/pulseed/SKILL.md`](.claude/skills/pulseed/SKILL.md).
+1. Read the engineering handbook: [`.claude/skills/traceforge/SKILL.md`](.claude/skills/traceforge/SKILL.md).
    It covers the architecture decisions, the dependency rules between packages, and the definition of done.
 2. Run `pnpm check`. It must pass: formatting, lint, types, tests and build.
 3. Add tests for the behavior you changed, including failure paths.

@@ -1,6 +1,6 @@
-# Deploying Pulseed
+# Deploying TraceForge
 
-Pulseed runs on free tiers:
+TraceForge runs on free tiers:
 
 | Part                         | Host       | Why                                                                                              |
 | ---------------------------- | ---------- | ------------------------------------------------------------------------------------------------ |
@@ -21,8 +21,8 @@ Deploy in this order: database → API → dashboard → demo.
 1. At [render.com](https://render.com): **New → Blueprint**, then pick this repository. Render reads `render.yaml`.
 2. Fill in the three variables it asks for:
    - `DATABASE_URL`: the Neon string from step 1.
-   - `PUBLIC_API_URL`: the service's own URL, e.g. `https://pulseed-api.onrender.com`. It's shown after the first deploy; set it and redeploy.
-   - `DASHBOARD_ORIGINS`: your Vercel dashboard URL from step 3, e.g. `https://pulseed.vercel.app`.
+   - `PUBLIC_API_URL`: the service's own URL, e.g. `https://traceforge-api.onrender.com`. It's shown after the first deploy; set it and redeploy.
+   - `DASHBOARD_ORIGINS`: your Vercel dashboard URL from step 3, e.g. `https://traceforge.vercel.app`.
 3. Deploy. Migrations run automatically at startup (`MIGRATE_ON_START=true`). `https://<api>/ready` should return `{"status":"ready"}`.
 
 > The free plan sleeps after 15 minutes idle, and the first request after that takes about 30–60 s.
@@ -34,7 +34,7 @@ Deploy in this order: database → API → dashboard → demo.
 1. **Add New → Project**, then import this repository.
 2. **Root Directory:** `apps/dashboard`. `vercel.json` sets the install and build commands for the monorepo.
 3. Environment variables:
-   - `API_URL`: the Render URL, e.g. `https://pulseed-api.onrender.com`
+   - `API_URL`: the Render URL, e.g. `https://traceforge-api.onrender.com`
    - `ENABLE_EXPERIMENTAL_COREPACK`: `1` (so Vercel uses the pnpm version pinned in `package.json`)
 4. Deploy, then add the dashboard URL to `DASHBOARD_ORIGINS` on Render if you haven't yet.
 
@@ -47,13 +47,13 @@ whenever a serverless function reaches its time limit.
 1. A second Vercel project from the same repository, with **Root Directory** `apps/demo`.
 2. Sign up on your deployed dashboard, create a project, and copy its DSN.
 3. Environment variables:
-   - `NEXT_PUBLIC_PULSEED_DSN`: that DSN (it will point at your Render API)
+   - `NEXT_PUBLIC_TRACEFORGE_DSN`: that DSN (it will point at your Render API)
    - `NEXT_PUBLIC_DASHBOARD_URL`: your dashboard URL
    - `ENABLE_EXPERIMENTAL_COREPACK`: `1`
 
 ## 5. Publishing the SDK to npm
 
-1. On [npmjs.com](https://www.npmjs.com), create the free organization **`pulseed`**.
+1. On [npmjs.com](https://www.npmjs.com), create the free organization **`traceforge`**.
 2. Create an **Automation** access token (Account → Access Tokens).
 3. In GitHub: **Settings → Secrets and variables → Actions → New repository secret**, named `NPM_TOKEN`.
 4. Release:

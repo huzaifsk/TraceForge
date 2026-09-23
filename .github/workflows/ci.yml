@@ -22,19 +22,19 @@ jobs:
       postgres:
         image: postgres:17-alpine
         env:
-          POSTGRES_USER: pulseed
-          POSTGRES_PASSWORD: pulseed
-          POSTGRES_DB: pulseed_test
+          POSTGRES_USER: traceforge
+          POSTGRES_PASSWORD: traceforge
+          POSTGRES_DB: traceforge_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U pulseed -d pulseed_test"
+          --health-cmd "pg_isready -U traceforge -d traceforge_test"
           --health-interval 5s
           --health-timeout 3s
           --health-retries 10
 
     env:
-      DATABASE_URL: postgres://pulseed:pulseed@localhost:5432/pulseed_test
+      DATABASE_URL: postgres://traceforge:traceforge@localhost:5432/traceforge_test
       BETTER_AUTH_SECRET: ci-only-secret-ci-only-secret-ci-only
       TURBO_TELEMETRY_DISABLED: 1
 
@@ -55,10 +55,10 @@ jobs:
       - run: pnpm turbo run lint typecheck test build
 
       - name: SDK bundle size
-        run: pnpm --filter @pulseed/sdk size
+        run: pnpm --filter @traceforge/sdk size
 
       - name: Install Playwright Chromium
-        run: pnpm --filter @pulseed/e2e exec playwright install --with-deps chromium
+        run: pnpm --filter @traceforge/e2e exec playwright install --with-deps chromium
 
       - name: Browser tests (SDK in Chromium)
         run: pnpm e2e

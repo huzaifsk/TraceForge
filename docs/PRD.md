@@ -1,13 +1,13 @@
 # PRD — Frontend Observability Platform
 
-> Source of truth for **what** Pulseed is. Engineering decisions (the **how**)
-> live in `.claude/skills/pulseed/`. When the two disagree, the PRD wins on
+> Source of truth for **what** TraceForge is. Engineering decisions (the **how**)
+> live in `.claude/skills/traceforge/`. When the two disagree, the PRD wins on
 > product scope and the skill wins on implementation detail — and the conflict
 > should be raised, not silently resolved.
 
 ## 1. Product Overview
 
-**Product name:** Pulseed
+**Product name:** TraceForge
 **Type:** Open-source frontend observability platform
 **Primary goal:** Allow frontend developers to monitor production applications for JavaScript errors, API failures, Web Vitals, performance issues, and user-impacting failures through a lightweight SDK and web dashboard.
 
@@ -18,7 +18,7 @@ The project should demonstrate strong frontend engineering rather than simply be
 ```text
 User's React / Next.js App
           │
-          │ @pulseed/sdk
+          │ @traceforge/sdk
           ↓
    Browser Monitoring SDK
           │
@@ -37,7 +37,7 @@ User's React / Next.js App
        Database
           │
           ↓
-   Pulseed Dashboard
+   TraceForge Dashboard
 ```
 
 ---
@@ -158,7 +158,7 @@ Example:
 My E-commerce App
 React / Next.js
 Production
-Project ID: pw_12345
+Project ID: tf_12345
 ```
 
 ### Environments
@@ -178,22 +178,22 @@ Production
 Create an npm package:
 
 ```text
-@pulseed/sdk
+@traceforge/sdk
 ```
 
 Installation:
 
 ```bash
-npm install @pulseed/sdk
+npm install @traceforge/sdk
 ```
 
 Initialization:
 
 ```typescript
-import { init } from "@pulseed/sdk"
+import { init } from "@traceforge/sdk"
 
 init({
-  dsn: "https://pulseed.example.com/project/pw_xxx",
+  dsn: "https://traceforge.example.com/project/tf_xxx",
   environment: "production",
 })
 ```
@@ -235,9 +235,9 @@ window.onunhandledrejection
 Provide an Error Boundary:
 
 ```tsx
-<PulseedErrorBoundary>
+<TraceForgeErrorBoundary>
   <App />
-</PulseedErrorBoundary>
+</TraceForgeErrorBoundary>
 ```
 
 Capture:
@@ -608,7 +608,7 @@ Request:
 
 ```json
 {
-  "projectId": "pw_123",
+  "projectId": "tf_123",
   "events": []
 }
 ```
@@ -646,7 +646,7 @@ Build the dashboard with:
 ### Main dashboard
 
 ```text
-Pulseed
+TraceForge
 ─────────────────────────────────────────
 
 Project: BrandHub     Environment: Production
@@ -782,7 +782,7 @@ For the MVP, SSE is sufficient.
 
 # 25. Demo Application
 
-Create a separate application specifically designed to demonstrate Pulseed.
+Create a separate application specifically designed to demonstrate TraceForge.
 
 It should contain intentional problems:
 
@@ -861,7 +861,7 @@ Use the free tiers and design the application so it doesn't depend on paid infra
 Use:
 
 ```text
-pulseed/
+traceforge/
 │
 ├── apps/
 │   ├── dashboard/
@@ -1075,8 +1075,8 @@ Pull Request
 
 README should contain:
 
-1. **Problem** — what Pulseed solves.
-2. **Quick Start** — `npm install @pulseed/sdk`
+1. **Problem** — what TraceForge solves.
+2. **Quick Start** — `npm install @traceforge/sdk`
 3. **Setup** — `init({...})`
 4. **Architecture** — diagram.
 5. **Event lifecycle** — `Browser → SDK → Queue → Worker → API → DB → Dashboard`
@@ -1184,7 +1184,7 @@ Keep this rule-based initially rather than requiring paid AI APIs.
 
 Once genuinely implemented, the project could appear as:
 
-**Pulseed — Open Source Frontend Observability Platform**
+**TraceForge — Open Source Frontend Observability Platform**
 
 > Built a TypeScript frontend observability SDK and Next.js dashboard capturing JavaScript errors, API failures, Web Vitals and navigation performance; implemented event batching, IndexedDB offline buffering and Web Worker processing to minimize monitoring overhead.
 

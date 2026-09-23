@@ -1,6 +1,6 @@
 "use client"
 
-import type { Project } from "@pulseed/event-schema"
+import type { Project } from "@traceforge/event-schema"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@pulseed/ui/components/dropdown-menu"
+} from "@traceforge/ui/components/dropdown-menu"
 import {
   Sidebar,
   SidebarContent,
@@ -22,7 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@pulseed/ui/components/sidebar"
+} from "@traceforge/ui/components/sidebar"
 import { CheckIcon, ChevronsUpDownIcon, LayoutGridIcon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 import { useRouter, useSelectedLayoutSegment } from "next/navigation"

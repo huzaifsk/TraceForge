@@ -1,6 +1,6 @@
 "use client"
 
-import type { EndpointDetail } from "@pulseed/event-schema"
+import type { EndpointDetail } from "@traceforge/event-schema"
 
 import { TimeSeriesChart } from "@/components/charts/time-series-chart"
 import { formatDuration } from "@/lib/format"

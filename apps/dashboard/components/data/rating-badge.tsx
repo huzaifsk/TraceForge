@@ -1,6 +1,6 @@
-import type { WebVitalRating } from "@pulseed/event-schema/constants"
-import { Badge } from "@pulseed/ui/components/badge"
-import { cn } from "@pulseed/ui/lib/utils"
+import type { WebVitalRating } from "@traceforge/event-schema/constants"
+import { Badge } from "@traceforge/ui/components/badge"
+import { cn } from "@traceforge/ui/lib/utils"
 import { CircleAlertIcon, CircleCheckIcon, CircleXIcon } from "lucide-react"
 
 const RATING = {
