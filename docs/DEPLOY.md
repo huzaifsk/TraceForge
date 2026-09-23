@@ -15,6 +15,8 @@ Deploy in this order: database → API → dashboard → demo.
 
 1. Create a free project at [neon.tech](https://neon.tech).
 2. Copy the **pooled** connection string. It must end with `?sslmode=require`.
+3. Note the region. `render.yaml` uses Render's `ohio` region to match Neon's AWS `us-east-2`; if your
+   Neon project is elsewhere, change `region:` in `render.yaml` to the nearest Render region first.
 
 ## 2. API (Render)
 

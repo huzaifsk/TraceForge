@@ -5,6 +5,10 @@ services:
     name: traceforge-api
     runtime: node
     plan: free
+    # Same region as the Neon database (AWS us-east-2, Ohio): every API request
+    # makes several queries, so a cross-country hop would add latency to each.
+    # Render cannot change a service's region after it is created.
+    region: ohio
     # Install dev dependencies too: the build needs tsdown and TypeScript.
     buildCommand: >-
       npm install -g pnpm@12.5.1 &&
