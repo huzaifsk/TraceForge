@@ -32,10 +32,10 @@ Deploy in this order: database → API → dashboard → demo.
 ## 3. Dashboard (Vercel)
 
 1. **Add New → Project**, then import this repository.
-2. **Root Directory:** `apps/dashboard`. `vercel.json` sets the install and build commands for the monorepo.
+2. **Root Directory:** `apps/dashboard` (Framework Preset: Next.js). `vercel.json` sets the install and build
+   commands for the monorepo, with the exact pnpm version the lockfile needs; leave Build and Output Settings alone.
 3. Environment variables:
    - `API_URL`: the Render URL, e.g. `https://traceforge-api.onrender.com`
-   - `ENABLE_EXPERIMENTAL_COREPACK`: `1` (so Vercel uses the pnpm version pinned in `package.json`)
 4. Deploy, then add the dashboard URL to `DASHBOARD_ORIGINS` on Render if you haven't yet.
 
 The browser only ever talks to the dashboard's own domain: `/api/*` is proxied to Render, so
@@ -49,7 +49,6 @@ whenever a serverless function reaches its time limit.
 3. Environment variables:
    - `NEXT_PUBLIC_TRACEFORGE_DSN`: that DSN (it will point at your Render API)
    - `NEXT_PUBLIC_DASHBOARD_URL`: your dashboard URL
-   - `ENABLE_EXPERIMENTAL_COREPACK`: `1`
 
 ## 5. Publishing the SDK to npm
 
