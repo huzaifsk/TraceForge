@@ -1,5 +1,5 @@
 import { LIMITS, SDK_DEFAULTS } from "@traceforge/event-schema/constants"
-import type { DeviceContext, MonitoringEvent } from "@traceforge/event-schema/types"
+import type { DeviceContext, ErrorMechanism, MonitoringEvent } from "@traceforge/event-schema/types"
 
 import { getDeviceContext } from "./context/device"
 import { getPageContext } from "./context/page"
@@ -26,6 +26,10 @@ interface PendingBatch {
 
 export interface CaptureContext {
   tags?: Readonly<Record<string, string>>
+  /** Defaults to "manual". Set by @traceforge/sdk/react for boundary-caught errors. */
+  mechanism?: ErrorMechanism
+  /** React component stack, attached when the error came from an error boundary. */
+  componentStack?: string
 }
 
 export interface Client {
@@ -235,9 +239,12 @@ export function createClient(
     options,
     capture,
     captureException(error, context) {
+      const payload = toErrorPayload(error, context?.mechanism ?? "manual", true)
       capture({
         type: "error",
-        payload: toErrorPayload(error, "manual", true),
+        payload: context?.componentStack
+          ? { ...payload, componentStack: context.componentStack }
+          : payload,
         ...(context?.tags && { tags: context.tags }),
       })
     },

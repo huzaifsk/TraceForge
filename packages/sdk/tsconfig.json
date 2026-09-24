@@ -1,4 +1,11 @@
 {
-  "extends": "@traceforge/typescript-config/library.json",
+  "extends": "@traceforge/typescript-config/react-library.json",
+  "compilerOptions": {
+    // react.tsx imports the published package name, not a relative path (see the
+    // comment in src/react.tsx), so map it to source for this package's own typecheck.
+    "paths": {
+      "@traceforge/sdk": ["./src/index.ts"]
+    }
+  },
   "include": ["src", "*.config.ts"]
 }

@@ -102,7 +102,7 @@ export const errorPayloadSchema = z.object({
   stack: boundedString(LIMITS.maxStackLength).optional(),
   frames: z.array(stackFrameSchema).max(LIMITS.maxStackFrames).optional(),
   /** How the error reached the SDK. */
-  mechanism: z.enum(["onerror", "onunhandledrejection", "error-boundary", "manual"]),
+  mechanism: z.enum(["onerror", "onunhandledrejection", "error-boundary", "manual", "server"]),
   handled: z.boolean(),
   /** React component stack from an error boundary. */
   componentStack: boundedString(LIMITS.maxComponentStackLength).optional(),

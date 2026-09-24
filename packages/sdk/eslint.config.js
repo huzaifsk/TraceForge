@@ -1,3 +1,3 @@
-import { config } from "@traceforge/eslint-config/base"
+import { config } from "@traceforge/eslint-config/react-internal"
 
 export default config

@@ -60,7 +60,8 @@ interface BaseEvent {
   tags?: Record<string, string>
 }
 
-export type ErrorMechanism = "onerror" | "onunhandledrejection" | "error-boundary" | "manual"
+export type ErrorMechanism =
+  "onerror" | "onunhandledrejection" | "error-boundary" | "manual" | "server"
 
 export interface ErrorPayload {
   /** Error constructor name, e.g. TypeError. */

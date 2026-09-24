@@ -5,7 +5,13 @@
  */
 import { z } from "zod"
 
-import { DEVICE_TYPES, ENVIRONMENTS, WEB_VITAL_NAMES, WEB_VITAL_RATINGS } from "./constants"
+import {
+  DEVICE_TYPES,
+  ENVIRONMENTS,
+  EVENT_TYPES,
+  WEB_VITAL_NAMES,
+  WEB_VITAL_RATINGS,
+} from "./constants"
 
 export const TIME_RANGES = ["1h", "24h", "7d", "30d"] as const
 export type TimeRange = (typeof TIME_RANGES)[number]
@@ -15,6 +21,9 @@ export type IssueStatus = (typeof ISSUE_STATUSES)[number]
 
 export const PLATFORMS = ["javascript", "react", "nextjs"] as const
 export type Platform = (typeof PLATFORMS)[number]
+
+export const ALERT_WEBHOOK_KINDS = ["generic", "slack"] as const
+export type AlertWebhookKind = (typeof ALERT_WEBHOOK_KINDS)[number]
 
 export const rangeQuerySchema = z.object({
   range: z.enum(TIME_RANGES).default("24h"),
@@ -173,6 +182,51 @@ export const issueDetailSchema = z.object({
 
 export const updateIssueSchema = z.object({ status: z.enum(ISSUE_STATUSES) })
 
+export const alertWebhookSchema = z.object({
+  id: z.string(),
+  url: z.url(),
+  kind: z.enum(ALERT_WEBHOOK_KINDS),
+  notifyOnNewIssue: z.boolean(),
+  notifyOnRegression: z.boolean(),
+  enabled: z.boolean(),
+  createdAt: z.string(),
+})
+
+export const alertWebhookListSchema = z.object({ webhooks: z.array(alertWebhookSchema) })
+
+export const createAlertWebhookSchema = z.object({
+  url: z.url().max(2_048),
+  kind: z.enum(ALERT_WEBHOOK_KINDS).default("generic"),
+  notifyOnNewIssue: z.boolean().default(true),
+  notifyOnRegression: z.boolean().default(true),
+})
+
+export const updateAlertWebhookSchema = z
+  .object({ enabled: z.boolean(), notifyOnNewIssue: z.boolean(), notifyOnRegression: z.boolean() })
+  .partial()
+  .refine((body) => Object.keys(body).length > 0, { message: "nothing to update" })
+
+export const releaseSchema = z.object({
+  id: z.string(),
+  version: z.string(),
+  notes: z.string().nullable(),
+  createdAt: z.string(),
+})
+
+export const releaseListSchema = z.object({ releases: z.array(releaseSchema) })
+
+export const releaseDetailSchema = z.object({
+  release: releaseSchema,
+  eventCount: z.number().int().nonnegative(),
+  issueCount: z.number().int().nonnegative(),
+  affectedUsers: z.number().int().nonnegative(),
+})
+
+export const createReleaseSchema = z.object({
+  version: z.string().trim().min(1).max(128),
+  notes: z.string().trim().max(2_000).optional(),
+})
+
 export const endpointRowSchema = z.object({
   method: z.string(),
   endpoint: z.string(),
@@ -248,6 +302,49 @@ export const liveEventSchema = z.object({
   issueId: z.string().nullable().optional(),
 })
 
+export const sessionsQuerySchema = rangeQuerySchema.extend({
+  q: z.string().trim().max(128).optional(),
+  offset: z.coerce.number().int().min(0).max(10_000).default(0),
+})
+
+export const sessionSummarySchema = z.object({
+  sessionId: z.string(),
+  anonymousId: z.string().nullable(),
+  firstSeen: z.string(),
+  lastSeen: z.string(),
+  durationMs: z.number(),
+  eventCount: count,
+  errorCount: count,
+  environment: z.enum(ENVIRONMENTS),
+  browser: z.string(),
+  os: z.string(),
+  deviceType: z.enum(DEVICE_TYPES),
+  lastPath: z.string(),
+})
+
+export const sessionListSchema = z.object({
+  sessions: z.array(sessionSummarySchema),
+  hasMore: z.boolean(),
+})
+
+/** One row of a session's timeline. Summaries only — no stacks (same rule as the live stream). */
+export const sessionEventSchema = z.object({
+  id: z.string(),
+  type: z.enum(EVENT_TYPES),
+  timestamp: z.string(),
+  path: z.string(),
+  route: z.string().nullable(),
+  summary: z.string(),
+  issueId: z.string().nullable(),
+})
+
+export const sessionDetailSchema = z.object({
+  session: sessionSummarySchema,
+  events: z.array(sessionEventSchema),
+  /** True when the session had more than 500 events and the list was capped. */
+  truncated: z.boolean(),
+})
+
 export type Project = z.infer<typeof projectSchema>
 export type Overview = z.infer<typeof overviewSchema>
 export type VitalSummary = z.infer<typeof vitalSummarySchema>
@@ -260,3 +357,12 @@ export type EndpointList = z.infer<typeof endpointListSchema>
 export type EndpointDetail = z.infer<typeof endpointDetailSchema>
 export type Vitals = z.infer<typeof vitalsSchema>
 export type LiveEvent = z.infer<typeof liveEventSchema>
+export type SessionSummary = z.infer<typeof sessionSummarySchema>
+export type SessionList = z.infer<typeof sessionListSchema>
+export type SessionEvent = z.infer<typeof sessionEventSchema>
+export type SessionDetail = z.infer<typeof sessionDetailSchema>
+export type AlertWebhook = z.infer<typeof alertWebhookSchema>
+export type AlertWebhookList = z.infer<typeof alertWebhookListSchema>
+export type Release = z.infer<typeof releaseSchema>
+export type ReleaseList = z.infer<typeof releaseListSchema>
+export type ReleaseDetail = z.infer<typeof releaseDetailSchema>

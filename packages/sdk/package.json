@@ -1,6 +1,6 @@
 {
   "name": "@traceforge/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lightweight browser SDK for TraceForge: JS errors, API failures, Web Vitals and navigation \u2014 batched, retried and privacy-first.",
   "keywords": [
     "observability",
@@ -45,6 +45,26 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./react": {
+      "import": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      },
+      "require": {
+        "types": "./dist/react.d.cts",
+        "default": "./dist/react.cjs"
+      }
+    },
+    "./next": {
+      "import": {
+        "types": "./dist/next.d.ts",
+        "default": "./dist/next.js"
+      },
+      "require": {
+        "types": "./dist/next.d.cts",
+        "default": "./dist/next.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -56,14 +76,26 @@
     "size": "size-limit",
     "clean": "rm -rf dist .turbo coverage"
   },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@traceforge/eslint-config": "workspace:*",
     "@traceforge/event-schema": "workspace:*",
     "@traceforge/shared": "workspace:*",
     "@traceforge/typescript-config": "workspace:*",
     "@size-limit/preset-small-lib": "^14.0.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "catalog:",
     "eslint": "catalog:",
     "happy-dom": "^20.14.5",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "size-limit": "^14.0.0",
     "tsdown": "^0.23.0",
     "typescript": "catalog:",
@@ -80,6 +112,18 @@
       "path": "dist/index.js",
       "import": "{ init }",
       "limit": "10 KB"
+    },
+    {
+      "name": "React error boundary, beyond core (ESM, min+brotli)",
+      "path": "dist/react.js",
+      "import": "{ TraceForgeErrorBoundary }",
+      "limit": "1 KB"
+    },
+    {
+      "name": "Next.js server error capture, beyond core (ESM, min+brotli)",
+      "path": "dist/next.js",
+      "import": "{ withTraceForge }",
+      "limit": "1 KB"
     }
   ]
 }
