@@ -5,28 +5,52 @@ import Link from "next/link"
 
 import { CodeBlock } from "@/components/code-block"
 import { Facts } from "@/components/landing/facts"
+import { Faq } from "@/components/landing/faq"
 import { Features } from "@/components/landing/features"
 import { HowItWorks } from "@/components/landing/how-it-works"
 import { Privacy } from "@/components/landing/privacy"
 import { ProductShot } from "@/components/landing/product-shot"
 import { GITHUB_URL, SiteHeader } from "@/components/landing/site-header"
 import { SiteFooter } from "@/components/landing/site-footer"
+import { UseCases } from "@/components/landing/use-cases"
+import { WhyOpenSource } from "@/components/landing/why-open-source"
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: { absolute: "TraceForge — open-source frontend observability" },
-  description:
-    "See the JavaScript errors, failing API calls and slow pages your users hit in production. A 9 KB SDK, a real-time dashboard, open source.",
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
   openGraph: {
     title: "TraceForge — open-source frontend observability",
     description:
       "JavaScript errors, API failures and Core Web Vitals from real users, in a 9 KB SDK.",
+    url: SITE_URL,
+    siteName: "TraceForge",
     images: [{ url: "/landing/overview-light.png", width: 2880, height: 1800 }],
   },
+}
+
+/** Static, non-user-derived structured data — safe to inline as JSON-LD. */
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "TraceForge",
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  license: "https://opensource.org/licenses/MIT",
 }
 
 export default function LandingPage() {
   return (
     <div className="flex min-h-svh flex-col">
+      {/* Static, server-rendered JSON-LD — no user input reaches this string. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       <SiteHeader />
       <main className="flex flex-1 flex-col">
         <section
@@ -75,8 +99,11 @@ export default function LandingPage() {
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-24 px-4 py-24 lg:px-6">
           <Facts />
           <Features />
+          <UseCases />
           <HowItWorks />
+          <WhyOpenSource />
           <Privacy />
+          <Faq />
 
           <section
             aria-labelledby="cta-title"

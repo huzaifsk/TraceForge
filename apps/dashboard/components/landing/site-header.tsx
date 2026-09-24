@@ -20,15 +20,21 @@ export function SiteHeader() {
           aria-label="Site"
           className="hidden items-center gap-5 text-sm text-muted-foreground md:flex"
         >
-          <a href="#features" className="hover:text-foreground">
+          <Link href="/#features" className="hover:text-foreground">
             Features
-          </a>
-          <a href="#how-it-works" className="hover:text-foreground">
+          </Link>
+          <Link href="/#how-it-works" className="hover:text-foreground">
             How it works
-          </a>
-          <a href="#privacy" className="hover:text-foreground">
+          </Link>
+          <Link href="/#privacy" className="hover:text-foreground">
             Privacy
-          </a>
+          </Link>
+          <Link href="/#faq" className="hover:text-foreground">
+            FAQ
+          </Link>
+          <Link href="/guide" className="hover:text-foreground">
+            Guide
+          </Link>
           <a href={GITHUB_URL} className="hover:text-foreground">
             GitHub
           </a>

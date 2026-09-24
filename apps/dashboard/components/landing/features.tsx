@@ -14,36 +14,42 @@ const FEATURES = [
     title: "Issues, not noise",
     description:
       "Identical errors group into one issue across deploys, with occurrences, affected users, the stack trace, and browser and page breakdowns.",
+    color: "text-chart-2",
   },
   {
     icon: NetworkIcon,
     title: "API performance",
     description:
       "Every fetch your frontend makes, per endpoint: requests, error rate, average and p95 latency, status codes and recent failures.",
+    color: "text-chart-1",
   },
   {
     icon: GaugeIcon,
     title: "Core Web Vitals",
     description:
       "LCP, INP, CLS, FCP and TTFB at p75 from real visits, rated against Google's thresholds, with the slowest routes called out.",
+    color: "text-chart-3",
   },
   {
     icon: RadioIcon,
     title: "Live events",
     description:
       "Watch errors, requests and vitals stream in as they happen, and jump straight to the issue.",
+    color: "text-chart-4",
   },
   {
     icon: PackageIcon,
     title: "A 9 KB SDK",
     description:
       "No dependencies. Batches, compresses and retries in the background, delivers when the tab closes, and never throws into your app.",
+    color: "text-chart-5",
   },
   {
     icon: ShieldCheckIcon,
     title: "Private by default",
     description:
       "Technical context only. No input values, cookies, headers or request bodies, and query strings are redacted in the browser.",
+    color: "text-status-good-text",
   },
 ] as const
 
@@ -60,11 +66,13 @@ export function Features() {
         </p>
       </div>
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {FEATURES.map(({ icon: Icon, title, description }) => (
+        {FEATURES.map(({ icon: Icon, title, description, color }) => (
           <li key={title}>
-            <Card className="h-full">
+            <Card className="h-full transition-colors hover:border-foreground/20">
               <CardHeader>
-                <span className="mb-2 flex size-9 items-center justify-center rounded-lg border bg-muted/50">
+                <span
+                  className={`mb-2 flex size-9 items-center justify-center rounded-lg border bg-muted/50 ${color}`}
+                >
                   <Icon className="size-4" aria-hidden="true" />
                 </span>
                 <CardTitle className="text-base">{title}</CardTitle>

@@ -1,6 +1,6 @@
 "use client"
 
-import { PLATFORMS, type Platform, type Project } from "@traceforge/event-schema"
+import { PLATFORMS, type AlertWebhook, type Platform, type Project } from "@traceforge/event-schema"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -39,6 +39,7 @@ import { useState } from "react"
 import { CodeBlock } from "@/components/code-block"
 import { PLATFORM_LABELS } from "@/components/projects/platforms"
 
+import { AlertsSection } from "./alerts-section"
 import { useProjectMutation } from "./use-project-mutation"
 
 function GeneralSection({ project }: { project: Project }) {
@@ -284,12 +285,19 @@ function DangerSection({ project }: { project: Project }) {
   )
 }
 
-export function ProjectSettings({ project }: { project: Project }) {
+export function ProjectSettings({
+  project,
+  alertWebhooks,
+}: {
+  project: Project
+  alertWebhooks: AlertWebhook[]
+}) {
   return (
     <div className="flex max-w-3xl flex-col gap-6">
       <GeneralSection project={project} />
       <KeysSection project={project} />
       <IngestionSection project={project} />
+      <AlertsSection projectId={project.id} webhooks={alertWebhooks} />
       <DangerSection project={project} />
     </div>
   )

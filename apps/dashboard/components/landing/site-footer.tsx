@@ -10,6 +10,9 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-6">
         <Logo className="text-foreground" />
         <nav aria-label="Footer" className="flex flex-wrap gap-5">
+          <Link href="/guide" className="hover:text-foreground">
+            Guide
+          </Link>
           <a href={GITHUB_URL} className="hover:text-foreground">
             GitHub
           </a>

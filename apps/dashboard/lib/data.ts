@@ -1,6 +1,6 @@
 import "server-only"
 
-import { projectSchema } from "@traceforge/event-schema"
+import { alertWebhookListSchema, projectSchema } from "@traceforge/event-schema"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { z } from "zod"
@@ -20,4 +20,12 @@ export const getProject = cache(async (projectId: string) => {
   const project = (await getProjects()).find((item) => item.id === projectId)
   if (!project) notFound()
   return project
+})
+
+export const getAlertWebhooks = cache(async (projectId: string) => {
+  const { webhooks } = await apiGet(
+    `/api/v1/projects/${projectId}/alert-webhooks`,
+    alertWebhookListSchema
+  )
+  return webhooks
 })

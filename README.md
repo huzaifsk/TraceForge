@@ -4,9 +4,18 @@
 dashboard that show you **what failed, where, how often, and who it affected**: JavaScript
 errors, unhandled rejections, failing and slow API calls, Core Web Vitals and navigation performance.
 
-> **Status: MVP complete, pre-release.** The SDK, ingestion API, dashboard and demo app work end to
-> end locally. Publishing to npm and hosting are next; see the
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="apps/dashboard/public/landing/overview-dark.png">
+  <img src="apps/dashboard/public/landing/overview-light.png" alt="The TraceForge dashboard overview: error, API failure and user counts, an error trend chart, Core Web Vitals, and the top issues" width="100%">
+</picture>
+
+> **Status: actively developed, pre-release.** The SDK (core, React and Next.js integrations),
+> ingestion API, dashboard, alert webhooks and release tracking are built and tested end to end
+> locally. Publishing to npm and hosting are next; see the
 > [roadmap](.claude/skills/traceforge/SKILL.md#roadmap).
+
+**[Read the guide →](https://thetraceforge.vercel.app/guide)** for setup, framework integrations,
+alerts, releases and configuration.
 
 ## Why
 
@@ -29,11 +38,13 @@ init({
 })
 ```
 
-For Next.js, initialize in `instrumentation-client.ts` so monitoring starts before hydration.
-The SDK is not on npm yet. Until it is, run `pnpm --filter @traceforge/sdk build && pnpm --filter @traceforge/sdk pack`
-and `npm install` the resulting `.tgz` in your app.
+For Next.js, initialize in `instrumentation-client.ts` so monitoring starts before hydration, and
+add [`@traceforge/sdk/next`](packages/sdk/README.md#nextjs) to catch errors in Server Components,
+Route Handlers and Server Actions. The SDK is not on npm yet. Until it is, run
+`pnpm --filter @traceforge/sdk build && pnpm --filter @traceforge/sdk pack` and `npm install` the
+resulting `.tgz` in your app. Full walkthrough: [the guide](https://thetraceforge.vercel.app/guide).
 
-## What you get
+## Features
 
 - **Issues:** uncaught errors and unhandled rejections, grouped by fingerprint across deploys, with
   occurrences, affected users, stack traces (library frames collapsed), and browser, OS, device and page breakdowns.
@@ -41,6 +52,10 @@ and `npm install` the resulting `.tgz` in your app.
   latency, status codes and recent failures.
 - **Web Vitals:** LCP, INP, CLS, FCP and TTFB at p75 with ratings, distributions, trends and the slowest routes.
 - **Live events:** a real-time stream over SSE.
+- **React & Next.js:** an error boundary for render errors (`@traceforge/sdk/react`), and a
+  server-side hook for Server Components, Route Handlers and Server Actions (`@traceforge/sdk/next`).
+- **Alerts:** webhook (Slack or any HTTPS endpoint) notifications on new issues and regressions.
+- **Releases:** tag a deploy and see its events, issues and affected users on their own.
 - **A 9 KB SDK** with no runtime dependencies. It batches, compresses, retries with backoff, and delivers
   on page hide via `sendBeacon`. It never throws into your app.
 
