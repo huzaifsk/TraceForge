@@ -7,6 +7,7 @@ import {
 import { sql } from "drizzle-orm"
 import {
   bigint,
+  boolean,
   doublePrecision,
   index,
   integer,
@@ -33,6 +34,7 @@ export const webVitalRatingEnum = pgEnum("web_vital_rating", WEB_VITAL_RATINGS)
 export const platformEnum = pgEnum("platform", ["javascript", "react", "nextjs"])
 export const projectStatusEnum = pgEnum("project_status", ["active", "paused"])
 export const issueStatusEnum = pgEnum("issue_status", ["unresolved", "resolved", "ignored"])
+export const alertWebhookKindEnum = pgEnum("alert_webhook_kind", ["generic", "slack"])
 
 const createdAt = () => timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 
@@ -102,6 +104,7 @@ export const events = pgTable(
     index("events_project_time_idx").on(t.projectId, t.timestamp.desc()),
     index("events_project_type_time_idx").on(t.projectId, t.type, t.timestamp.desc()),
     index("events_project_fingerprint_idx").on(t.projectId, t.fingerprint),
+    index("events_project_session_time_idx").on(t.projectId, t.sessionId, t.timestamp.desc()),
   ]
 )
 
@@ -202,4 +205,47 @@ export const issueUsers = pgTable(
     userKey: text("user_key").notNull(),
   },
   (t) => [primaryKey({ name: "issue_users_pkey", columns: [t.issueId, t.userKey] })]
+)
+
+// ---------------------------------------------------------------------------
+// Alert webhooks — notify on new or regressed issues (PRD Phase 3 §38).
+// ---------------------------------------------------------------------------
+
+export const alertWebhooks = pgTable(
+  "alert_webhooks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    url: text("url").notNull(),
+    kind: alertWebhookKindEnum("kind").notNull().default("generic"),
+    notifyOnNewIssue: boolean("notify_on_new_issue").notNull().default(true),
+    notifyOnRegression: boolean("notify_on_regression").notNull().default(true),
+    enabled: boolean("enabled").notNull().default(true),
+    createdAt: createdAt(),
+  },
+  (t) => [index("alert_webhooks_project_idx").on(t.projectId)]
+)
+
+// ---------------------------------------------------------------------------
+// Releases — version markers a project can tag (PRD Phase 3 §38).
+// ---------------------------------------------------------------------------
+
+export const releases = pgTable(
+  "releases",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    /** Free-form version string, e.g. a git SHA or semver tag; matched against events.release. */
+    version: text("version").notNull(),
+    notes: text("notes"),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    uniqueIndex("releases_project_version_idx").on(t.projectId, t.version),
+    index("releases_project_created_idx").on(t.projectId, t.createdAt.desc()),
+  ]
 )

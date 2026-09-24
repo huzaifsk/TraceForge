@@ -7,6 +7,9 @@ import {
   issuesQuerySchema,
   overviewSchema,
   rangeQuerySchema,
+  sessionDetailSchema,
+  sessionListSchema,
+  sessionsQuerySchema,
   updateIssueSchema,
   vitalsQuerySchema,
   vitalsSchema,
@@ -21,9 +24,11 @@ import {
   getEndpoint,
   getIssue,
   getOverview,
+  getSession,
   getVitals,
   listEndpoints,
   listIssues,
+  listSessions,
 } from "../services/analytics"
 
 const params = z.object({ projectId: z.string().max(64) })
@@ -156,6 +161,39 @@ export const analyticsRoutes: FastifyPluginAsyncZod = async (app) => {
       },
     },
     async (request) => getVitals(app.sql, request.params.projectId, request.query)
+  )
+
+  app.get(
+    `${base}/sessions`,
+    {
+      schema: {
+        params,
+        querystring: sessionsQuerySchema,
+        response: { 200: sessionListSchema, 404: errorResponse },
+      },
+    },
+    async (request) => listSessions(app.sql, request.params.projectId, request.query)
+  )
+
+  app.get(
+    `${base}/sessions/:sessionId`,
+    {
+      schema: {
+        params: params.extend({ sessionId: z.string().max(64) }),
+        querystring: rangeQuerySchema,
+        response: { 200: sessionDetailSchema, 404: errorResponse },
+      },
+    },
+    async (request, reply) => {
+      const detail = await getSession(
+        app.sql,
+        request.params.projectId,
+        request.params.sessionId,
+        request.query.range,
+        request.query.environment
+      )
+      return detail ?? reply.code(404).send(notFound("Session"))
+    }
   )
 
   app.get(

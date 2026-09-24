@@ -14,7 +14,7 @@ import {
   normalizeFilename,
   parseStack,
 } from "@traceforge/shared"
-import { sql } from "drizzle-orm"
+import { and, eq, inArray, sql } from "drizzle-orm"
 
 import type { Database } from "../db/client"
 import { apiRequests, events, issues, issueUsers, webVitals } from "../db/schema"
@@ -188,11 +188,21 @@ function aggregateIssues(inserted: readonly EnrichedEvent[]): IssueAggregate[] {
   return [...byFingerprint.values()]
 }
 
+/** An issue that just appeared, or that regressed (recurred after being resolved). */
+export interface AlertEvent {
+  kind: "new" | "regression"
+  issueId: string
+  type: IssueEvent["type"]
+  title: string
+}
+
 export interface PersistResult {
   /** Events that were new (not duplicates of an earlier delivery). */
   inserted: EnrichedEvent[]
   /** Issue id for every fingerprint touched by this batch. */
   issueIds: Map<string, string>
+  /** Issues worth notifying a webhook about, in this batch. */
+  alertEvents: AlertEvent[]
 }
 
 /**
@@ -206,7 +216,7 @@ export async function persistEvents(
   enriched: readonly EnrichedEvent[]
 ): Promise<PersistResult> {
   const issueIds = new Map<string, string>()
-  if (enriched.length === 0) return { inserted: [], issueIds }
+  if (enriched.length === 0) return { inserted: [], issueIds, alertEvents: [] }
 
   return db.transaction(async (tx) => {
     const insertedIds = await tx
@@ -236,7 +246,7 @@ export async function persistEvents(
 
     const newIds = new Set(insertedIds.map((row) => row.id))
     const inserted = enriched.filter(({ event }) => newIds.has(event.id))
-    if (inserted.length === 0) return { inserted, issueIds }
+    if (inserted.length === 0) return { inserted, issueIds, alertEvents: [] }
 
     const apiRows = inserted.flatMap(({ event, timestamp }) =>
       event.type === "api_request" || event.type === "api_error"
@@ -281,7 +291,24 @@ export async function persistEvents(
     if (vitalRows.length > 0) await tx.insert(webVitals).values(vitalRows).onConflictDoNothing()
 
     const aggregates = aggregateIssues(inserted)
+    const alertEvents: AlertEvent[] = []
     if (aggregates.length > 0) {
+      // Snapshot pre-upsert status so we can tell a brand-new issue from a
+      // regression (a resolved issue recurring) after the upsert below.
+      const before = await tx
+        .select({ fingerprint: issues.fingerprint, status: issues.status })
+        .from(issues)
+        .where(
+          and(
+            eq(issues.projectId, projectId),
+            inArray(
+              issues.fingerprint,
+              aggregates.map((a) => a.fingerprint)
+            )
+          )
+        )
+      const statusBefore = new Map(before.map((row) => [row.fingerprint, row.status]))
+
       const upserted = await tx
         .insert(issues)
         .values(
@@ -308,7 +335,21 @@ export async function persistEvents(
         })
         .returning({ id: issues.id, fingerprint: issues.fingerprint })
 
-      for (const row of upserted) issueIds.set(row.fingerprint, row.id)
+      for (const row of upserted) {
+        issueIds.set(row.fingerprint, row.id)
+        const agg = aggregates.find((a) => a.fingerprint === row.fingerprint)
+        if (!agg) continue
+        const prevStatus = statusBefore.get(row.fingerprint)
+        if (prevStatus === undefined)
+          alertEvents.push({ kind: "new", issueId: row.id, type: agg.type, title: agg.title })
+        else if (prevStatus === "resolved")
+          alertEvents.push({
+            kind: "regression",
+            issueId: row.id,
+            type: agg.type,
+            title: agg.title,
+          })
+      }
       const userRows = aggregates.flatMap((a) => {
         const issueId = issueIds.get(a.fingerprint)
         return issueId ? [...a.userKeys].map((userKey) => ({ issueId, userKey })) : []
@@ -336,6 +377,6 @@ export async function persistEvents(
       }
     }
 
-    return { inserted, issueIds }
+    return { inserted, issueIds, alertEvents }
   })
 }

@@ -246,9 +246,72 @@ describe.skipIf(!inject("dbAvailable"))("analytics", () => {
     })
   })
 
+  it("lists sessions with counts, pagination and search", async () => {
+    await ingest([
+      errorEvent({ sessionId: "s1" }),
+      {
+        ...ctx({ sessionId: "s1" }),
+        type: "navigation",
+        payload: { to: "/orders", kind: "initial" },
+      },
+      {
+        ...ctx({ sessionId: "s2" }),
+        type: "navigation",
+        payload: { to: "/checkout", kind: "initial" },
+      },
+    ])
+
+    const list = await get("/sessions")
+    expect(list.sessions).toHaveLength(2)
+    expect(list.hasMore).toBe(false)
+    const s1 = list.sessions.find((s: { sessionId: string }) => s.sessionId === "s1")
+    expect(s1).toMatchObject({ sessionId: "s1", eventCount: 2, errorCount: 1, lastPath: "/orders" })
+
+    const searched = await get("/sessions?q=s2")
+    expect(searched.sessions.map((s: { sessionId: string }) => s.sessionId)).toEqual(["s2"])
+  })
+
+  it("returns a session's chronological timeline with issue links", async () => {
+    await ingest([
+      errorEvent({ sessionId: "s1" }),
+      {
+        ...ctx({ sessionId: "s1" }),
+        type: "navigation",
+        payload: { to: "/orders", kind: "initial" },
+      },
+    ])
+
+    const detail = await get("/sessions/s1")
+    expect(detail.session).toMatchObject({ sessionId: "s1", eventCount: 2, errorCount: 1 })
+    expect(detail.truncated).toBe(false)
+    // Most recent first: the error (timestamp = now) before the navigation (now - 60s).
+    expect(detail.events).toMatchObject([
+      {
+        type: "error",
+        summary: "TypeError: Cannot read properties of undefined (reading 'id')",
+        issueId: expect.any(String),
+      },
+      { type: "navigation", issueId: null },
+    ])
+
+    const missing = await app.inject({
+      method: "GET",
+      url: `/api/v1/projects/${project.id}/sessions/does-not-exist`,
+      headers: { cookie },
+    })
+    expect(missing.statusCode).toBe(404)
+  })
+
   it("hides other users' projects behind 404", async () => {
     const other = await signUp(app)
-    for (const path of ["/overview", "/issues", "/api-endpoints", "/web-vitals", "/stream"]) {
+    for (const path of [
+      "/overview",
+      "/issues",
+      "/api-endpoints",
+      "/web-vitals",
+      "/sessions",
+      "/stream",
+    ]) {
       const response = await app.inject({
         method: "GET",
         url: `/api/v1/projects/${project.id}${path}`,

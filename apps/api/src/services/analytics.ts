@@ -6,13 +6,23 @@ import type {
   IssueList,
   IssueStatus,
   Overview,
+  SessionDetail,
+  SessionList,
+  SessionSummary,
   TimeRange,
   Vitals,
   VitalSummary,
 } from "@traceforge/event-schema"
-import { WEB_VITAL_NAMES, type WebVitalName } from "@traceforge/event-schema/constants"
+import {
+  WEB_VITAL_NAMES,
+  type DeviceType,
+  type EventType,
+  type WebVitalName,
+} from "@traceforge/event-schema/constants"
 import { parseStack, rateWebVital } from "@traceforge/shared"
 import type postgres from "postgres"
+
+import { summarize } from "./live"
 
 /*
  * Aggregations for the dashboard, done in SQL. Every numeric column is cast
@@ -763,5 +773,179 @@ export async function getVitals(
       routes: facetRoutes.map((row) => row.route),
       browsers: facetBrowsers.map((row) => row.browser),
     },
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Sessions
+// ---------------------------------------------------------------------------
+
+/** Chronological timeline is capped like the live stream (`LiveStream`'s own `MAX_ROWS`). */
+const MAX_TIMELINE_EVENTS = 500
+
+interface SessionAggRow {
+  session_id: string
+  anonymous_id: string | null
+  first_seen: number
+  last_seen: number
+  event_count: number
+  error_count: number
+  environment: Environment
+  browser: string
+  os: string
+  device_type: DeviceType
+  last_path: string
+}
+
+/** One row per session: aggregates plus the most recent event's context (browser/os/path/…). */
+const sessionAgg = (sql: Sql) => sql`
+  select session_id,
+    (array_agg(anonymous_id order by timestamp desc))[1] as anonymous_id,
+    (extract(epoch from min(timestamp)) * 1000)::float8 as first_seen,
+    (extract(epoch from max(timestamp)) * 1000)::float8 as last_seen,
+    count(*)::int as event_count,
+    count(*) filter (where type in ('error', 'unhandled_rejection', 'api_error'))::int as error_count,
+    (array_agg(environment::text order by timestamp desc))[1] as environment,
+    (array_agg(browser order by timestamp desc))[1] as browser,
+    (array_agg(os order by timestamp desc))[1] as os,
+    (array_agg(device_type order by timestamp desc))[1] as device_type,
+    (array_agg(path order by timestamp desc))[1] as last_path
+`
+
+const toSessionSummary = (row: SessionAggRow): SessionSummary => ({
+  sessionId: row.session_id,
+  anonymousId: row.anonymous_id,
+  firstSeen: iso(row.first_seen)!,
+  lastSeen: iso(row.last_seen)!,
+  durationMs: row.last_seen - row.first_seen,
+  eventCount: row.event_count,
+  errorCount: row.error_count,
+  environment: row.environment,
+  browser: row.browser,
+  os: row.os,
+  deviceType: row.device_type,
+  lastPath: row.last_path,
+})
+
+export async function listSessions(
+  sql: Sql,
+  projectId: string,
+  query: { range: TimeRange; environment?: Environment; q?: string; offset: number }
+): Promise<SessionList> {
+  const window = timeWindow(query.range)
+  const rows = await sql<SessionAggRow[]>`
+    ${sessionAgg(sql)}
+    from events
+    where project_id = ${projectId} and ${inWindow(sql, window)} ${envFilter(sql, query.environment)}
+      ${
+        query.q
+          ? sql`and (session_id ilike ${`${escapeLike(query.q)}%`} or anonymous_id ilike ${`${escapeLike(query.q)}%`})`
+          : sql``
+      }
+    group by session_id
+    order by last_seen desc
+    limit ${PAGE_SIZE + 1} offset ${query.offset}
+  `
+
+  return {
+    sessions: rows.slice(0, PAGE_SIZE).map(toSessionSummary),
+    hasMore: rows.length > PAGE_SIZE,
+  }
+}
+
+interface TimelineRow {
+  id: string
+  type: EventType
+  timestamp: number
+  path: string
+  route: string | null
+  fingerprint: string | null
+  payload: unknown
+}
+
+export async function getSession(
+  sql: Sql,
+  projectId: string,
+  sessionId: string,
+  range: TimeRange,
+  environment?: Environment
+): Promise<SessionDetail | null> {
+  const window = timeWindow(range)
+  const scope = sql`project_id = ${projectId} and session_id = ${sessionId}
+    and ${inWindow(sql, window)} ${envFilter(sql, environment)}`
+
+  const [summary] = await sql<SessionAggRow[]>`
+    ${sessionAgg(sql)}
+    from events where ${scope}
+    group by session_id
+  `
+  if (!summary) return null
+
+  const rows = await sql<TimelineRow[]>`
+    select id::text as id, type::text as type,
+      (extract(epoch from timestamp) * 1000)::float8 as timestamp,
+      path, route, fingerprint, payload
+    from events where ${scope}
+    order by timestamp desc
+    limit ${MAX_TIMELINE_EVENTS + 1}
+  `
+  const truncated = rows.length > MAX_TIMELINE_EVENTS
+  const page = rows.slice(0, MAX_TIMELINE_EVENTS)
+
+  const fingerprints = [
+    ...new Set(page.flatMap((row) => (row.fingerprint ? [row.fingerprint] : []))),
+  ]
+  const issueRows =
+    fingerprints.length > 0
+      ? await sql<{ fingerprint: string; id: string }[]>`
+          select fingerprint, id::text as id from issues
+          where project_id = ${projectId} and fingerprint in ${sql(fingerprints)}
+        `
+      : []
+  const issueByFingerprint = new Map(issueRows.map((row) => [row.fingerprint, row.id]))
+
+  return {
+    session: toSessionSummary(summary),
+    events: page.map((row) => ({
+      id: row.id,
+      type: row.type,
+      timestamp: iso(row.timestamp)!,
+      path: row.path,
+      route: row.route,
+      summary: summarize(row),
+      issueId: row.fingerprint ? (issueByFingerprint.get(row.fingerprint) ?? null) : null,
+    })),
+    truncated,
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Releases
+// ---------------------------------------------------------------------------
+
+export interface ReleaseStats {
+  eventCount: number
+  issueCount: number
+  affectedUsers: number
+}
+
+/** Stats for every event tagged with this release string, across all time. */
+export async function getReleaseStats(
+  sql: Sql,
+  projectId: string,
+  version: string
+): Promise<ReleaseStats> {
+  const [row] = await sql<{ event_count: number; issue_count: number; affected_users: number }[]>`
+    select
+      count(*)::int as event_count,
+      count(distinct fingerprint)::int as issue_count,
+      count(distinct coalesce(anonymous_id, session_id))::int as affected_users
+    from events
+    where project_id = ${projectId} and release = ${version}
+  `
+  return {
+    eventCount: row?.event_count ?? 0,
+    issueCount: row?.issue_count ?? 0,
+    affectedUsers: row?.affected_users ?? 0,
   }
 }

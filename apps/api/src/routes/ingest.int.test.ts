@@ -1,7 +1,17 @@
 import { gzipSync } from "node:zlib"
 
 import { LIMITS } from "@traceforge/event-schema/constants"
-import { afterAll, beforeAll, beforeEach, describe, expect, inject, it } from "vitest"
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  inject,
+  it,
+  vi,
+} from "vitest"
 
 import type { App } from "../app"
 import {
@@ -30,6 +40,7 @@ describe.skipIf(!inject("dbAvailable"))("POST /api/v1/events", () => {
     project = await createProject(app, cookie)
   })
   afterAll(() => app.close())
+  afterEach(() => vi.restoreAllMocks())
 
   const send = (
     body: unknown,
@@ -241,6 +252,95 @@ describe.skipIf(!inject("dbAvailable"))("POST /api/v1/events", () => {
 
     expect(received).toEqual([2])
     expect(app.eventBus.listenerCount(project.id)).toBe(0)
+  })
+
+  describe("alert webhooks", () => {
+    const addWebhook = async (body: Record<string, unknown> = {}) => {
+      const response = await app.inject({
+        method: "POST",
+        url: `/api/v1/projects/${project.id}/alert-webhooks`,
+        headers: { cookie },
+        payload: { url: "https://example.com/hook", ...body },
+      })
+      return response.json() as { id: string }
+    }
+
+    // Delivery is fire-and-forget from the route, so the fetch call may land
+    // a tick after the ingest response resolves.
+    const waitForFetch = (fetchMock: ReturnType<typeof vi.fn>) =>
+      vi.waitFor(() => expect(fetchMock).toHaveBeenCalled(), { timeout: 2_000 })
+
+    it("notifies a webhook when a new issue appears", async () => {
+      const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(null))
+      await addWebhook()
+
+      await send(batch(project.id, [errorEvent()]))
+      await waitForFetch(fetchMock)
+
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+      const [url, init] = fetchMock.mock.calls[0]!
+      expect(url).toBe("https://example.com/hook")
+      const body = JSON.parse(String(init?.body)) as { type: string }
+      expect(body.type).toBe("issue.new")
+    })
+
+    it("notifies a webhook when a resolved issue regresses", async () => {
+      const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(null))
+      await addWebhook()
+      await send(batch(project.id, [errorEvent()]))
+      await waitForFetch(fetchMock)
+      await app.sql`update issues set status = 'resolved'`
+      fetchMock.mockClear()
+
+      await send(batch(project.id, [errorEvent()]))
+      await waitForFetch(fetchMock)
+
+      const [, init] = fetchMock.mock.calls[0]!
+      const body = JSON.parse(String(init?.body)) as { type: string }
+      expect(body.type).toBe("issue.regressed")
+    })
+
+    it("does not notify when an ignored issue recurs", async () => {
+      const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(null))
+      await addWebhook()
+      await send(batch(project.id, [errorEvent()]))
+      await waitForFetch(fetchMock)
+      await app.sql`update issues set status = 'ignored'`
+      fetchMock.mockClear()
+
+      await send(batch(project.id, [errorEvent()]))
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(fetchMock).not.toHaveBeenCalled()
+      const [issue] = await app.sql`select status from issues`
+      expect(issue?.status).toBe("ignored")
+    })
+
+    it("respects the notifyOnNewIssue toggle", async () => {
+      const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(null))
+      await addWebhook({ notifyOnNewIssue: false })
+
+      await send(batch(project.id, [errorEvent()]))
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
+
+    it("does not notify a disabled webhook", async () => {
+      const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(null))
+      const webhook = await addWebhook()
+      await app.inject({
+        method: "PATCH",
+        url: `/api/v1/projects/${project.id}/alert-webhooks/${webhook.id}`,
+        headers: { cookie },
+        payload: { enabled: false },
+      })
+
+      await send(batch(project.id, [errorEvent()]))
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
   })
 })
 

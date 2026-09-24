@@ -11,6 +11,7 @@ import {
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod"
 import { z } from "zod"
 
+import { dispatchAlerts } from "../services/alerts"
 import { enrichEvents, persistEvents, validateEvents } from "../services/ingest"
 import { toLiveEvents } from "../services/live"
 
@@ -138,8 +139,15 @@ export const ingestRoutes: FastifyPluginAsyncZod = async (app) => {
 
       const { valid, rejected } = validateEvents(batch.events)
       const enriched = enrichEvents(valid, batch.sentAt, receivedAt)
-      const { inserted, issueIds } = await persistEvents(app.db, project.id, enriched)
+      const { inserted, issueIds, alertEvents } = await persistEvents(app.db, project.id, enriched)
       app.eventBus.publish(project.id, toLiveEvents(inserted, issueIds))
+      dispatchAlerts(
+        app.db,
+        app.log,
+        app.config.DASHBOARD_ORIGINS[0],
+        project.id,
+        alertEvents
+      ).catch((err: unknown) => request.log.warn({ err }, "alert dispatch failed"))
 
       if (rejected > 0)
         request.log.info({ projectId: project.id, rejected }, "rejected invalid events")

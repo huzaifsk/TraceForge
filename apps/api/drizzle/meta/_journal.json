@@ -8,6 +8,27 @@
       "when": 1790156471853,
       "tag": "0000_initial",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790230507337,
+      "tag": "0001_events_session_index",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790241817224,
+      "tag": "0002_alert_webhooks",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790246426617,
+      "tag": "0003_releases",
+      "breakpoints": true
     }
   ]
 }

@@ -17,10 +17,12 @@ import { createAuth } from "./auth/auth"
 import { authPlugin } from "./auth/plugin"
 import { createDb, type Database } from "./db/client"
 import type { Env } from "./env"
+import { alertWebhookRoutes } from "./routes/alert-webhooks"
 import { analyticsRoutes } from "./routes/analytics"
 import { healthRoutes } from "./routes/health"
 import { ingestRoutes } from "./routes/ingest"
 import { projectRoutes } from "./routes/projects"
+import { releaseRoutes } from "./routes/releases"
 import { EventBus } from "./services/event-bus"
 import { ProjectKeyCache } from "./services/project-keys"
 
@@ -111,6 +113,8 @@ export async function buildApp({ env, logger }: BuildAppOptions) {
   await app.register(projectRoutes)
   await app.register(ingestRoutes)
   await app.register(analyticsRoutes)
+  await app.register(alertWebhookRoutes)
+  await app.register(releaseRoutes)
 
   return app
 }
