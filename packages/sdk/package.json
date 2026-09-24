@@ -1,6 +1,6 @@
 {
   "name": "@traceforge/sdk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lightweight browser SDK for TraceForge: JS errors, API failures, Web Vitals and navigation \u2014 batched, retried and privacy-first.",
   "keywords": [
     "observability",
