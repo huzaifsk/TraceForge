@@ -13,10 +13,12 @@ import {
 import {
   BugIcon,
   CircleSlashIcon,
+  ComponentIcon,
   GaugeIcon,
   ImageIcon,
   LayoutPanelTopIcon,
   ServerCrashIcon,
+  ServerIcon,
   TimerIcon,
   WifiOffIcon,
 } from "lucide-react"
@@ -131,6 +133,25 @@ const TRIGGERS: Trigger[] = [
     action: "Open page",
     href: "/layout-shift",
     note: "CLS is sent when you leave the page.",
+  },
+  {
+    title: "React render crash",
+    description: "A component throws while rendering; the error boundary catches it.",
+    produces: "error · error-boundary",
+    icon: ComponentIcon,
+    action: "Open page",
+    href: "/react-crash",
+  },
+  {
+    title: "Server-side crash",
+    description: "A Route Handler throws on the server — the browser SDK never sees this.",
+    produces: "error · server",
+    icon: ServerIcon,
+    action: "Call API",
+    run: async () => {
+      const response = await fetch("/api/demo/server-crash")
+      toast.error(`GET /api/demo/server-crash → ${response.status}`)
+    },
   },
 ]
 
